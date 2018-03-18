@@ -8,10 +8,19 @@ constexpr float cell_size = 5;
 
 class cell_t {
 public:
+     cell_t() : impl_ ( std::make_unique<empty> ( empty {} ) ) {}
+
      template <typename T>
      cell_t ( const T& x ) : impl_ ( std::make_unique<T> ( x ) ) {}
 
      cell_t ( const cell_t& x ) : impl_ ( x.impl_->copy() ) {}
+     cell_t ( cell_t&& ) noexcept = default;
+
+     cell_t& operator= ( const cell_t& x )
+     {
+          return *this = cell_t ( x );
+     }
+     cell_t& operator= ( cell_t&& ) = default;
 
      struct cell_impl_t {
           virtual ~cell_impl_t() = default;

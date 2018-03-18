@@ -27,6 +27,12 @@ struct matrix {
           }
      }
 
+     matrix ( const matrix& x ) = default;
+     matrix ( matrix&& ) noexcept = default;
+     matrix& operator= ( const matrix& x ) = default;
+     matrix& operator= ( matrix&& ) = default;
+     matrix() = default;
+
      auto begin()
      {
           return data.begin();
@@ -41,4 +47,3 @@ struct matrix {
 }
 
 #endif // BLAVENCIA_UTILS_MATRIX_HPP
-
