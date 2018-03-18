@@ -3,11 +3,14 @@
 
 int main()
 {
-     map_t<3, 3> map {  {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}},
-          {cell_t::wall{}, cell_t::empty{}, cell_t::wall{}},
-          {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}}
+    // TODO: There's  bug in the row vs col order!
+     map_t<5, 5> map {
+          {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}, cell_t::wall{},  cell_t::wall{}},
+          {cell_t::wall{}, cell_t::empty{}, cell_t::wall{}, cell_t::empty{},  cell_t::wall{}},
+          {cell_t::wall{}, cell_t::empty{},  cell_t::wall{}, cell_t::empty{},  cell_t::wall{}},
+          {cell_t::wall{}, cell_t::empty{}, cell_t::empty{}, cell_t::empty{},  cell_t::wall{}},
+          {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}, cell_t::wall{},  cell_t::wall{}}
      };
-
 
      sf::RenderWindow world ( sf::VideoMode ( map.width(), map.height() ), "Blavencia" );
      world.setFramerateLimit ( 60 );
