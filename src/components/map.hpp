@@ -41,8 +41,8 @@ private:
      void set_cells_position()
      {
           std::size_t row = 0;
-          std::size_t col = 0;
           for ( auto &cells_row : cells ) {
+               std::size_t col = 0;
                for ( auto &cell : cells_row ) {
                     cell.setPosition ( row * cell_size, col * cell_size );
                     col++;
