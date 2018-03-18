@@ -6,11 +6,19 @@ int main()
     sf::RenderWindow world(sf::VideoMode(500, 500), "Blavencia");
     world.setFramerateLimit(60);
     
-//     using ct = cell_t::type;
-//     
-//     map_t<3, 3> map {   {ct::wall, ct::wall,  ct::wall},
-//                         {ct::wall, ct::empty, ct::wall},
-//                         {ct::wall, ct::door,  ct::wall}
+    cell_t empty{cell_t::empty{}};
+    cell_t wall{cell_t::empty{}};
+    
+    estd::matrix<cell_t, 3, 3> cells   {{wall, wall,  wall},
+                                        {wall, empty, wall},
+                                        {wall, wall,  wall}
+                                        };
+                                        
+//     map_t<3, 3> map(cells);
+    
+//     map_t<3, 3> map {   {wall, wall,  wall},
+//                         {wall, empty, wall},
+//                         {wall, wall,  wall}
 //                         };
 
     while (world.isOpen())
