@@ -9,7 +9,15 @@ class map_t {
 public:
      map_t ( estd::matrix<cell_t, R, C> map ) : cells ( map )
      {
-          set_cells_position();
+          std::size_t row = 0;
+          for ( auto &cells_row : cells ) {
+               std::size_t col = 0;
+               for ( auto &cell : cells_row ) {
+                    cell.setPosition ( row * cell_size, col * cell_size );
+                    col++;
+               }
+               row++;
+          }
      }
      map_t ( std::initializer_list<std::initializer_list<cell_t>> map ) : map_t ( estd::matrix<cell_t, R, C> {map} ) {}
 
@@ -25,7 +33,7 @@ public:
 
      constexpr auto width() const
      {
-          return  cell_size * C;
+          return cell_size * C;
      }
 
      void draw ( sf::RenderWindow& target )
@@ -38,18 +46,6 @@ public:
      }
 
 private:
-     void set_cells_position()
-     {
-          std::size_t row = 0;
-          for ( auto &cells_row : cells ) {
-               std::size_t col = 0;
-               for ( auto &cell : cells_row ) {
-                    cell.setPosition ( row * cell_size, col * cell_size );
-                    col++;
-               }
-               row++;
-          }
-     }
      estd::matrix<cell_t, R, C> cells;
 };
 
