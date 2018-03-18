@@ -7,7 +7,7 @@ int main()
     world.setFramerateLimit(60);
     
     cell_t empty{cell_t::empty{}};
-    cell_t wall{cell_t::empty{}};
+    cell_t wall{cell_t::wall{}};
     
     estd::matrix<cell_t, 3, 3> cells   {{wall, wall,  wall},
                                         {wall, empty, wall},
