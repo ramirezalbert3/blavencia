@@ -4,6 +4,8 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 
+constexpr float cell_size = 5;
+
 class cell_t {
 public:
      template <typename T>
@@ -14,7 +16,7 @@ public:
      struct cell_impl_t {
           virtual ~cell_impl_t() = default;
           virtual std::unique_ptr<cell_impl_t> copy() const = 0;
-          sf::RectangleShape shape_;
+          sf::RectangleShape shape_ {sf::Vector2f{cell_size, cell_size}};
      };
 
      struct empty : public cell_impl_t {

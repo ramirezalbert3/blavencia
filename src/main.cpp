@@ -6,19 +6,16 @@ int main()
      sf::RenderWindow world ( sf::VideoMode ( 500, 500 ), "Blavencia" );
      world.setFramerateLimit ( 60 );
 
-     cell_t empty {cell_t::empty{}};
-     cell_t wall {cell_t::wall{}};
-
-     estd::matrix<cell_t, 3, 3> cells   {{wall, wall,  wall},
-          {wall, empty, wall},
-          {wall, wall,  wall}
-     };
+     estd::matrix<cell_t, 3, 3> cells   {{cell_t::wall{}, cell_t::wall{},  cell_t::wall{}},
+                                         {cell_t::wall{}, cell_t::empty{}, cell_t::wall{}},
+                                         {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}}
+                                        };
 
 //     map_t<3, 3> map(cells);
 
-//     map_t<3, 3> map {   {wall, wall,  wall},
-//                         {wall, empty, wall},
-//                         {wall, wall,  wall}
+//     map_t<3, 3> map {   {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}},
+//                         {cell_t::wall{}, cell_t::empty{}, cell_t::wall{}},
+//                         {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}}
 //                         };
 
      while ( world.isOpen() ) {
