@@ -4,7 +4,7 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 
-constexpr float cell_size = 5;
+constexpr float cell_size = 100;
 
 class cell_t {
 public:
@@ -49,6 +49,16 @@ public:
                return std::make_unique<wall> ( *this );
           };
      };
+
+     void setPosition ( float x, float y )
+     {
+          impl_->shape_.setPosition ( x, y );
+     }
+
+     void draw ( sf::RenderWindow& target )
+     {
+          target.draw ( impl_->shape_ );
+     }
 
 private:
      std::unique_ptr<cell_impl_t> impl_;

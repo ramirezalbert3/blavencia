@@ -3,12 +3,14 @@
 
 int main()
 {
-     sf::RenderWindow world ( sf::VideoMode ( 500, 500 ), "Blavencia" );
-     world.setFramerateLimit ( 60 );
-
      map_t<3, 3> map {  {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}},
-                        {cell_t::wall{}, cell_t::empty{}, cell_t::wall{}},
-                        {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}}};
+          {cell_t::wall{}, cell_t::empty{}, cell_t::wall{}},
+          {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}}
+     };
+
+
+     sf::RenderWindow world ( sf::VideoMode ( map.width(), map.height() ), "Blavencia" );
+     world.setFramerateLimit ( 60 );
 
      while ( world.isOpen() ) {
           sf::Event event;
@@ -18,6 +20,7 @@ int main()
           }
 
           world.clear ( sf::Color::Black );
+          map.draw ( world );
           world.display();
      }
 
