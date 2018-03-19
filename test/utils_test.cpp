@@ -4,11 +4,11 @@
 
 TEST ( MatrixTest, Basic )
 {
-     estd::matrix<double, 3, 3> m {
-          {1, 2, 3},
-          {4, 6, 7},
-          {7, 8, 11}
-     };
+    estd::matrix<double, 3, 3> m {
+        {1, 2, 3},
+        {4, 6, 7},
+        {7, 8, 11}
+    };
 
 //     for(auto &row : m)
 //     {
