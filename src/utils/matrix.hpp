@@ -4,6 +4,7 @@
 #include <initializer_list>
 #include <array>
 #include <exception>
+#include <string>
 
 namespace estd {
 template<class T, std::size_t R, std::size_t C>
@@ -26,6 +27,8 @@ struct matrix {
                if ( row >= C ) break;
           }
      }
+     
+     matrix (const std::string& filepath);
 
      matrix ( const matrix& x ) = default;
      matrix ( matrix&& ) noexcept = default;
