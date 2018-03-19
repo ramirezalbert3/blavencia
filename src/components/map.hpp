@@ -9,14 +9,14 @@ class map_t {
 public:
      map_t ( estd::matrix<cell_t, R, C> map ) : cells ( map )
      {
-          std::size_t row = 0;
-          for ( auto &cells_row : cells ) {
-               std::size_t col = 0;
-               for ( auto &cell : cells_row ) {
-                    cell.setPosition ( row * cell_size, col * cell_size );
-                    col++;
+          std::size_t y = 0;
+          for ( auto &row : cells ) {
+               std::size_t x = 0;
+               for ( auto &cell : row ) {
+                    cell.setPosition ( x * cell_size, y * cell_size );
+                    x++;
                }
-               row++;
+               y++;
           }
      }
      map_t ( std::initializer_list<std::initializer_list<cell_t>> map ) : map_t ( estd::matrix<cell_t, R, C> {map} ) {}

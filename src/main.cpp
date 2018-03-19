@@ -3,7 +3,6 @@
 
 int main()
 {
-    // TODO: There's  bug in the row vs col order!
      map_t<5, 5> map {
           {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}, cell_t::wall{},  cell_t::wall{}},
           {cell_t::wall{}, cell_t::empty{}, cell_t::wall{}, cell_t::empty{},  cell_t::wall{}},
