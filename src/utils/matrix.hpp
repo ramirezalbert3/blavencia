@@ -2,30 +2,27 @@
 #define BLAVENCIA_UTILS_MATRIX_HPP
 
 #include <initializer_list>
-#include <array>
 #include <vector>
 #include <exception>
 #include <string>
 
 namespace estd {
-template<class T, std::size_t R, std::size_t C>
+template<class T>
 struct matrix {
     matrix ( std::initializer_list<std::initializer_list<T>> list )
     {
-        if ( list.size() != R ) {
-            std::string msg = "Matrix has " + std::to_string ( R ) + " rows and initializer list has " + std::to_string ( list.size() );
-            throw std::out_of_range ( msg );
-        }
+        data.reserve ( list.size() );
 
-        std::size_t row = 0;
-        for ( auto l : list ) {
-            if ( l.size() != C ) {
-                std::string msg = "Matrix has " + std::to_string ( C ) + " columns and initializer list has " + std::to_string ( l.size() );
+        const auto columns = list.begin()->size();
+
+        for ( const auto& l : list ) {
+            if ( columns != l.size() ) {
+                const std::string msg = "Not all columns are equal in size found " +
+                                        std::to_string ( columns ) + " and " +
+                                        std::to_string ( l.size() );
                 throw std::out_of_range ( msg );
             }
-            std::copy ( l.begin(), l.end(), data[row].begin() );
-            row++;
-            if ( row >= C ) break;
+            data.push_back ( std::vector<T> ( l ) );
         }
     }
 
@@ -45,8 +42,16 @@ struct matrix {
     {
         return data.end();
     }
-
-    std::array<std::array<T, C>, R> data;
+    auto rows() const
+    {
+        return data.size();
+    }
+    auto columns() const
+    {
+        return data.begin()->size();
+    }
+private:
+    std::vector<std::vector<T>> data;
 };
 }
 

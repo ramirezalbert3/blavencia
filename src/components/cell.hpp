@@ -55,7 +55,7 @@ public:
         impl_->shape_.setPosition ( x, y );
     }
 
-    void draw ( sf::RenderWindow& target )
+    void draw ( sf::RenderWindow& target ) const
     {
         target.draw ( impl_->shape_ );
     }

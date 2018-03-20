@@ -4,10 +4,9 @@
 #include "utils/matrix.hpp"
 #include "components/cell.hpp"
 
-template<std::size_t R, std::size_t C>
 class map_t {
 public:
-    map_t ( estd::matrix<cell_t, R, C> map ) : cells ( map )
+    map_t ( estd::matrix<cell_t> map ) : cells ( map )
     {
         std::size_t y = 0;
         for ( auto &row : cells ) {
@@ -19,7 +18,7 @@ public:
             y++;
         }
     }
-    map_t ( std::initializer_list<std::initializer_list<cell_t>> map ) : map_t ( estd::matrix<cell_t, R, C> {map} ) {}
+    map_t ( std::initializer_list<std::initializer_list<cell_t>> map ) : map_t ( estd::matrix<cell_t> {map} ) {}
 
     map_t ( const map_t& x ) = default;
     map_t ( map_t&& ) noexcept = default;
@@ -28,25 +27,25 @@ public:
 
     constexpr auto height() const
     {
-        return cell_size * R;
+        return cell_size * cells.rows();
     }
 
     constexpr auto width() const
     {
-        return cell_size * C;
+        return cell_size * cells.columns();
     }
 
     void draw ( sf::RenderWindow& target )
     {
-        for ( auto &cells_row : cells ) {
-            for ( auto &cell : cells_row ) {
+        for ( const auto &cells_row : cells ) {
+            for ( const auto &cell : cells_row ) {
                 cell.draw ( target );
             }
         }
     }
 
 private:
-    estd::matrix<cell_t, R, C> cells;
+    estd::matrix<cell_t> cells;
 };
 
 #endif // BLAVENCIA_COMPONENTS_MAP_HPP

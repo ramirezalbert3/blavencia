@@ -3,7 +3,7 @@
 
 int main()
 {
-    map_t<5, 5> map {
+    map_t map {
         {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}, cell_t::wall{},  cell_t::wall{}},
         {cell_t::wall{}, cell_t::empty{}, cell_t::wall{}, cell_t::empty{},  cell_t::wall{}},
         {cell_t::wall{}, cell_t::empty{},  cell_t::wall{}, cell_t::empty{},  cell_t::wall{}},
