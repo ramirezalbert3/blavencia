@@ -1,5 +1,7 @@
 add_executable(blavencia
-                    main.cpp)
+                    main.cpp
+                    components/cell.cpp
+)
 
 target_include_directories(blavencia PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 

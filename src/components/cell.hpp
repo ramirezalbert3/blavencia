@@ -2,6 +2,7 @@
 #define BLAVENCIA_COMPONENTS_CELL_HPP
 
 #include <memory>
+#include <string>
 #include <SFML/Graphics.hpp>
 
 constexpr float cell_size = 100;
@@ -12,6 +13,8 @@ public:
 
     template <typename T>
     cell_t ( const T& x ) : impl_ ( std::make_unique<T> ( x ) ) {}
+    
+    cell_t (const std::string& name);
 
     cell_t ( const cell_t& x ) : impl_ ( x.impl_->copy() ) {}
     cell_t ( cell_t&& ) noexcept = default;
@@ -50,15 +53,8 @@ public:
         };
     };
 
-    void setPosition ( float x, float y )
-    {
-        impl_->shape_.setPosition ( x, y );
-    }
-
-    void draw ( sf::RenderWindow& target ) const
-    {
-        target.draw ( impl_->shape_ );
-    }
+    void setPosition ( float x, float y );
+    void draw ( sf::RenderWindow& target ) const;
 
 private:
     std::unique_ptr<cell_impl_t> impl_;
