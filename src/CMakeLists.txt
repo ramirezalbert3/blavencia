@@ -1,6 +1,5 @@
 add_executable(blavencia
-                    main.cpp
-                    utils/matrix.cpp)
+                    main.cpp)
 
 target_include_directories(blavencia PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 

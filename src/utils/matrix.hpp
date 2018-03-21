@@ -15,7 +15,7 @@ struct matrix {
 
         const auto columns = list.begin()->size();
 
-        for ( const auto& l : list ) {
+        for ( auto l : list ) {
             if ( columns != l.size() ) {
                 const std::string msg = "Not all columns are equal in size found " +
                                         std::to_string ( columns ) + " and " +
@@ -26,7 +26,7 @@ struct matrix {
         }
     }
 
-    matrix ( const std::string& filepath );
+    matrix ( std::vector<std::vector<T>> x) : data(x) {}
 
     matrix ( const matrix& x ) = default;
     matrix ( matrix&& ) noexcept = default;
@@ -34,6 +34,14 @@ struct matrix {
     matrix& operator= ( matrix&& ) = default;
     matrix() = default;
 
+    auto reserve(std::size_t size)
+    {
+        return data.reserve(size);
+    }
+    auto push_back(std::vector<T> element)
+    {
+        return data.push_back(element);
+    }
     auto begin()
     {
         return data.begin();
