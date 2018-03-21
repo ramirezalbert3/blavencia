@@ -27,6 +27,9 @@ struct matrix {
     }
 
     matrix ( std::vector<std::vector<T>> x) : data(x) {}
+    
+//     template <typename other>
+//     matrix ( matrix<other> x) : data(x.begin(), x.end()) {}
 
     matrix ( const matrix& x ) = default;
     matrix ( matrix&& ) noexcept = default;
