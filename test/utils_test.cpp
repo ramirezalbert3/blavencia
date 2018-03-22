@@ -1,7 +1,8 @@
-#include "gtest/gtest.h"
+
+#include <cstring>
+#include <gtest/gtest.h>
 #include <utils/matrix.hpp>
 #include <utils/csv.hpp>
-#include <iostream>
 
 TEST ( matrix_test, basic )
 {
@@ -11,26 +12,19 @@ TEST ( matrix_test, basic )
         {7, 8, 11}
     };
 
-    for ( auto &row : m ) {
-        for ( auto &col : row ) {
-            std::cout << col << " ";
-        }
-        std::cout << "\n";
-    }
-//     EXPECT_TRUE(false);
 }
 
 TEST ( csv_parser, basic )
 {
     auto result = csv::parse ( "test.csv" );
-    
+
     const estd::matrix<std::string> expected {
         {"empty", "empty", "wall"},
         {"empty", "wall", "wall"},
         {"wall", "empty", "wall"}
     };
 
-    EXPECT_EQ(0, std::memcmp(&result, &expected, sizeof(expected)));
+    EXPECT_EQ ( 0, std::memcmp ( &result, &expected, sizeof ( result ) ) );
 }
 
 TEST ( csv_parser, fail_to_open_and_throw )

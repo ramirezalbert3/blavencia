@@ -5,6 +5,7 @@
 #include <string>
 #include <exception>
 #include <fstream>
+#include <boost/tokenizer.hpp>
 #include <boost/algorithm/string.hpp>
 
 #include "utils/matrix.hpp"
@@ -25,10 +26,13 @@ estd::matrix<std::string> parse ( const std::string & filepath )
     estd::matrix<std::string> result;
     result.reserve ( rows );
 
-    std::string line;
-    while ( std::getline ( is, line ) ) {
-        std::vector<std::string> split_line;
-        boost::split ( split_line, line, boost::is_any_of ( "," ) );
+    using csv_tokenizer = boost::tokenizer<boost::escaped_list_separator<char>>;
+
+    for ( std::string line; std::getline ( is, line ); ) {
+        boost::erase_all ( line, " " );
+        csv_tokenizer tok ( line );
+        std::vector<std::string> split_line {tok.begin(), tok.end() };
+        split_line.pop_back();
         result.push_back ( split_line );
     }
 

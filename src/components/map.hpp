@@ -26,12 +26,12 @@ public:
     map_t& operator= ( const map_t& x ) = default;
     map_t& operator= ( map_t&& ) = default;
 
-    constexpr auto height() const
+    auto height() const
     {
         return cell_size * cells.rows();
     }
 
-    constexpr auto width() const
+    auto width() const
     {
         return cell_size * cells.columns();
     }

@@ -11,14 +11,6 @@ target_link_libraries(${test_name} GTest::GTest GTest::Main blavencia_lib)
 add_test(NAME ${test_name}
             COMMAND ${test_name}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test_files)
-
-set_target_properties(${test_name}
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
-
 endfunction(generate_test)
 
 generate_test(utils_test)
