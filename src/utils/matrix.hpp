@@ -26,10 +26,20 @@ struct matrix {
         }
     }
 
-    matrix ( std::vector<std::vector<T>> x) : data(x) {}
-    
-//     template <typename other>
-//     matrix ( matrix<other> x) : data(x.begin(), x.end()) {}
+    matrix ( std::vector<std::vector<T>> x ) : data ( x ) {}
+
+    template <typename other>
+    matrix ( matrix<other> x ) : data (
+            [x]()
+    {
+        std::vector<std::vector<T>> result;
+        result.reserve ( x.size() );
+        for ( auto element : x ) {
+            result.push_back ( std::vector<T> {element.begin(), element.end() } );
+        }
+        return result;
+    } ()
+    ) {}
 
     matrix ( const matrix& x ) = default;
     matrix ( matrix&& ) noexcept = default;
@@ -37,17 +47,29 @@ struct matrix {
     matrix& operator= ( matrix&& ) = default;
     matrix() = default;
 
-    auto reserve(std::size_t size)
+    auto reserve ( std::size_t size )
     {
-        return data.reserve(size);
+        return data.reserve ( size );
     }
-    auto push_back(std::vector<T> element)
+    auto push_back ( std::vector<T> element )
     {
-        return data.push_back(element);
+        return data.push_back ( element );
+    }
+    auto size () const
+    {
+        return data.size();
     }
     auto begin()
     {
         return data.begin();
+    }
+    auto begin() const
+    {
+        return data.begin();
+    }
+    auto end() const
+    {
+        return data.end();
     }
     auto end()
     {

@@ -9,22 +9,6 @@ constexpr float cell_size = 100;
 
 class cell_t {
 public:
-    cell_t() : impl_ ( std::make_unique<empty> ( empty {} ) ) {}
-
-    template <typename T>
-    cell_t ( const T& x ) : impl_ ( std::make_unique<T> ( x ) ) {}
-    
-    cell_t (const std::string& name);
-
-    cell_t ( const cell_t& x ) : impl_ ( x.impl_->copy() ) {}
-    cell_t ( cell_t&& ) noexcept = default;
-
-    cell_t& operator= ( const cell_t& x )
-    {
-        return *this = cell_t ( x );
-    }
-    cell_t& operator= ( cell_t&& ) = default;
-
     struct cell_impl_t {
         virtual ~cell_impl_t() = default;
         virtual std::unique_ptr<cell_impl_t> copy() const = 0;
@@ -52,6 +36,24 @@ public:
             return std::make_unique<wall> ( *this );
         };
     };
+
+    cell_t() : impl_ ( std::make_unique<empty> ( empty {} ) ) {}
+
+    cell_t ( std::unique_ptr<cell_impl_t>&& x ) : impl_ ( std::move ( x ) ) {}
+
+    cell_t ( empty x ) : impl_ ( std::make_unique<empty> ( x ) ) {}
+    cell_t ( wall x ) : impl_ ( std::make_unique<wall> ( x ) ) {}
+
+    cell_t ( const std::string& name );
+
+    cell_t ( const cell_t& x ) : impl_ ( x.impl_->copy() ) {}
+    cell_t ( cell_t&& ) noexcept = default;
+
+    cell_t& operator= ( const cell_t& x )
+    {
+        return *this = cell_t ( x );
+    }
+    cell_t& operator= ( cell_t&& ) = default;
 
     void setPosition ( float x, float y );
     void draw ( sf::RenderWindow& target ) const;

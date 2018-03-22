@@ -6,8 +6,6 @@ cell_t::cell_t ( const std::string& name ) : impl_ (
     return std::make_unique<empty> ( empty {} );
 }() ) {}
 
-
-
 void cell_t::setPosition ( float x, float y )
 {
     impl_->shape_.setPosition ( x, y );

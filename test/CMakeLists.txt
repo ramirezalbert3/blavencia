@@ -6,7 +6,7 @@ message(STATUS "Generating " ${test_name})
 add_executable(${test_name} ${test_name}.cpp)
 
 target_include_directories(${test_name} PRIVATE ${ROOT_SRC_DIR})
-target_link_libraries(${test_name} GTest::GTest GTest::Main)
+target_link_libraries(${test_name} GTest::GTest GTest::Main blavencia_lib)
 
 add_test(NAME ${test_name}
             COMMAND ${test_name}
@@ -22,4 +22,4 @@ set_target_properties(${test_name}
 endfunction(generate_test)
 
 generate_test(utils_test)
-generate_test(map_test)
+generate_test(components_test)

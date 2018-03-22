@@ -19,7 +19,7 @@ public:
         }
     }
     map_t ( std::initializer_list<std::initializer_list<cell_t>> map ) : map_t ( estd::matrix<cell_t> {map} ) {}
-//     map_t ( estd::matrix<std::string> map ) : map_t ( estd::matrix<cell_t> {map} ) {}
+    map_t ( estd::matrix<std::string> map ) : map_t ( estd::matrix<cell_t> {map} ) {}
 
     map_t ( const map_t& x ) = default;
     map_t ( map_t&& ) noexcept = default;

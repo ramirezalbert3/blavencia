@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include <components/map.hpp>
-
+#include "components/map.hpp"
 int main()
 {
     map_t map {
