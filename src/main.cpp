@@ -1,14 +1,18 @@
 #include <SFML/Graphics.hpp>
 #include "components/map.hpp"
+#include "utils/csv.hpp"
+
 int main()
 {
-    map_t map {
-        {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}, cell_t::wall{},  cell_t::wall{}},
-        {cell_t::wall{}, cell_t::empty{}, cell_t::wall{}, cell_t::empty{},  cell_t::wall{}},
-        {cell_t::wall{}, cell_t::empty{},  cell_t::wall{}, cell_t::empty{},  cell_t::wall{}},
-        {cell_t::wall{}, cell_t::empty{}, cell_t::empty{}, cell_t::empty{},  cell_t::wall{}},
-        {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}, cell_t::wall{},  cell_t::wall{}}
-    };
+//     map_t map {
+//         {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}, cell_t::wall{},  cell_t::wall{}},
+//         {cell_t::wall{}, cell_t::empty{}, cell_t::wall{}, cell_t::empty{},  cell_t::wall{}},
+//         {cell_t::wall{}, cell_t::empty{},  cell_t::wall{}, cell_t::empty{},  cell_t::wall{}},
+//         {cell_t::wall{}, cell_t::empty{}, cell_t::empty{}, cell_t::empty{},  cell_t::wall{}},
+//         {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}, cell_t::wall{},  cell_t::wall{}}
+//     };
+    auto result = csv::parse ( "map1.csv" );
+    map_t map {result};
 
     sf::RenderWindow world ( sf::VideoMode ( map.width(), map.height() ), "Blavencia" );
     world.setFramerateLimit ( 60 );

@@ -15,3 +15,5 @@ find_package(SFML 2.1 REQUIRED network audio graphics window system)
 
 add_subdirectory(src)
 add_subdirectory(test)
+
+configure_file(dat/map1.csv ${CMAKE_BINARY_DIR}/bin)

@@ -23,14 +23,14 @@ TEST ( matrix_test, basic )
 TEST ( csv_parser, basic )
 {
     auto result = csv::parse ( "test.csv" );
+    
+    const estd::matrix<std::string> expected {
+        {"empty", "empty", "wall"},
+        {"empty", "wall", "wall"},
+        {"wall", "empty", "wall"}
+    };
 
-    for ( auto &row : result ) {
-        for ( auto &col : row ) {
-            std::cout << col << " ";
-        }
-        std::cout << "\n";
-    }
-//     EXPECT_TRUE(false);
+    EXPECT_EQ(0, std::memcmp(&result, &expected, sizeof(expected)));
 }
 
 TEST ( csv_parser, fail_to_open_and_throw )
