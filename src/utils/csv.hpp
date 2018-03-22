@@ -18,8 +18,8 @@ estd::matrix<std::string> parse ( const std::string & filepath )
         throw std::runtime_error ( msg );
     }
 
-    is.seekg ( 0, std::ios::end );
-    const auto rows = is.tellg();
+    const auto rows = std::count ( std::istreambuf_iterator<char> ( is ),
+                                   std::istreambuf_iterator<char>(), '\n' );
     is.seekg ( 0, std::ios::beg );
 
     estd::matrix<std::string> result;
@@ -37,4 +37,3 @@ estd::matrix<std::string> parse ( const std::string & filepath )
 }
 
 #endif // BLAVENCIA_UTILS_CSV_HPP
-
