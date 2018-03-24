@@ -44,6 +44,16 @@ public:
         return map_size_.y;
     }
 
+    auto cell_width() const
+    {
+        return map_size_.x / cells.columns();
+    }
+
+    auto cell_height() const
+    {
+        return map_size_.y / cells.rows();
+    }
+
     void draw ( sf::RenderWindow& target )
     {
         for ( const auto &cells_row : cells ) {

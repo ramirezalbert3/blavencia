@@ -55,6 +55,7 @@ public:
 
     void setPosition ( float x, float y );
     void setSize (float width, float height);
+    auto size() const;
     void draw ( sf::RenderWindow& target ) const;
 
 private:

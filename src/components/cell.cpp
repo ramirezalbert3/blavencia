@@ -20,3 +20,8 @@ void cell_t::draw ( sf::RenderWindow& target ) const
 {
     target.draw ( impl_->shape_ );
 }
+
+auto cell_t::size() const
+{
+    return impl_->shape_.getSize();
+}
