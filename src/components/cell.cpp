@@ -26,6 +26,11 @@ sf::Vector2f cell_t::size() const
     return impl_->shape_.getSize();
 }
 
+sf::Vector2f cell_t::getPosition() const
+{
+    return impl_->shape_.getPosition();
+}
+
 std::experimental::optional<sf::FloatRect> cell_t::bounding_rectangle() const
 {
     return impl_->bounding_rectangle();

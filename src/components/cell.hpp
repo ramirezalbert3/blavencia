@@ -41,7 +41,7 @@ public:
         };
         std::experimental::optional<sf::FloatRect> bounding_rectangle() const override
         {
-            return std::experimental::optional<sf::FloatRect>{shape_.getGlobalBounds()};
+            return std::experimental::optional<sf::FloatRect> {shape_.getGlobalBounds() };
         }
     };
 
@@ -66,6 +66,7 @@ public:
     void setPosition ( float x, float y );
     void setSize ( float width, float height );
     sf::Vector2f size() const;
+    sf::Vector2f getPosition() const;
     std::experimental::optional<sf::FloatRect> bounding_rectangle() const;
     void draw ( sf::RenderWindow& target ) const;
 

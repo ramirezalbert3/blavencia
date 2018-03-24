@@ -1,8 +1,11 @@
 #include <SFML/Graphics.hpp>
+
 #include "components/map.hpp"
 #include "components/character.hpp"
+
 #include "utils/csv.hpp"
 #include "utils/collision.hpp"
+#include "utils/surroundings.hpp"
 
 int main()
 {
@@ -23,10 +26,13 @@ int main()
 
         collision::limit_movement ( player.getPosition(),
                                     final_position,
+                                    player.speed(),
                                     map );
 
         const auto movement = final_position.getPosition() - player.getPosition();
         player.move ( movement );
+
+        auto surrounding_cells = surroundings::surrounding_cells ( player.getGlobalBounds(), map ) ;
 
         world.clear ( sf::Color::Black );
         map.draw ( world );
@@ -36,4 +42,5 @@ int main()
 
     return 0;
 }
+
 
