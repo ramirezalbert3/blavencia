@@ -30,9 +30,9 @@ estd::matrix<std::string> parse ( const std::string & filepath )
 
     for ( std::string line; std::getline ( is, line ); ) {
         boost::erase_all ( line, " " );
+        if ( boost::algorithm::ends_with ( line, "," ) ) line.pop_back();
         csv_tokenizer tok ( line );
         std::vector<std::string> split_line {tok.begin(), tok.end() };
-        split_line.pop_back();
         result.push_back ( split_line );
     }
 
