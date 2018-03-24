@@ -8,7 +8,12 @@ cell_t::cell_t ( const std::string& name ) : impl_ (
 
 void cell_t::setPosition ( float x, float y )
 {
-    impl_->shape_.setPosition ( x, y );
+    impl_->shape_.setPosition ( {x, y} );
+}
+
+void cell_t::setSize ( float width, float height )
+{
+    impl_->shape_.setSize ( {width, height} );
 }
 
 void cell_t::draw ( sf::RenderWindow& target ) const

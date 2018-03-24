@@ -91,8 +91,7 @@ struct matrix {
         auto own = begin();
         for ( auto& other : m ) {
             if ( other.size() != own->size() ) return false;
-            bool is_equal = std::equal ( own->begin(), own->end(), other.begin() );
-            if ( !is_equal ) return false;
+            if ( !std::equal ( own->begin(), own->end(), other.begin() ) ) return false;
             own++;
         }
         return true;

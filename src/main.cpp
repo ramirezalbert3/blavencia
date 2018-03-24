@@ -4,7 +4,7 @@
 
 int main()
 {
-    map_t map {csv::parse ( "map1.csv" )};
+    map_t map {csv::parse ( "map1.csv" ), {800, 600}};
 
     sf::RenderWindow world ( sf::VideoMode ( map.width(), map.height() ), "Blavencia" );
     world.setFramerateLimit ( 60 );

@@ -5,14 +5,12 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
-constexpr float cell_size = 100;
-
 class cell_t {
 public:
     struct cell_impl_t {
         virtual ~cell_impl_t() = default;
         virtual std::unique_ptr<cell_impl_t> copy() const = 0;
-        sf::RectangleShape shape_ {sf::Vector2f{cell_size, cell_size}};
+        sf::RectangleShape shape_ {sf::Vector2f{5, 5}};
     };
 
     struct empty : public cell_impl_t {
@@ -56,6 +54,7 @@ public:
     cell_t& operator= ( cell_t&& ) = default;
 
     void setPosition ( float x, float y );
+    void setSize (float width, float height);
     void draw ( sf::RenderWindow& target ) const;
 
 private:
