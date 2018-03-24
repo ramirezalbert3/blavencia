@@ -4,8 +4,7 @@
 
 TEST ( map, from_csv )
 {
-    auto result = csv::parse ( "test.csv" );
-    map_t map {result};
+    map_t map {csv::parse ( "test.csv" )};
 }
 
 TEST ( cell, from_string )

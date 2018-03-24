@@ -4,15 +4,7 @@
 
 int main()
 {
-//     map_t map {
-//         {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}, cell_t::wall{},  cell_t::wall{}},
-//         {cell_t::wall{}, cell_t::empty{}, cell_t::wall{}, cell_t::empty{},  cell_t::wall{}},
-//         {cell_t::wall{}, cell_t::empty{},  cell_t::wall{}, cell_t::empty{},  cell_t::wall{}},
-//         {cell_t::wall{}, cell_t::empty{}, cell_t::empty{}, cell_t::empty{},  cell_t::wall{}},
-//         {cell_t::wall{}, cell_t::wall{},  cell_t::wall{}, cell_t::wall{},  cell_t::wall{}}
-//     };
-    auto result = csv::parse ( "map1.csv" );
-    map_t map {result};
+    map_t map {csv::parse ( "map1.csv" )};
 
     sf::RenderWindow world ( sf::VideoMode ( map.width(), map.height() ), "Blavencia" );
     world.setFramerateLimit ( 60 );

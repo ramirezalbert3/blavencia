@@ -9,6 +9,13 @@
 namespace estd {
 template<class T>
 struct matrix {
+
+    matrix ( const matrix& x ) = default;
+    matrix ( matrix&& ) noexcept = default;
+    matrix& operator= ( const matrix& x ) = default;
+    matrix& operator= ( matrix&& ) = default;
+    matrix() = default;
+
     matrix ( std::initializer_list<std::initializer_list<T>> list )
     {
         data.reserve ( list.size() );
@@ -26,7 +33,7 @@ struct matrix {
         }
     }
 
-    matrix ( std::vector<std::vector<T>> x ) : data ( x ) {}
+    matrix ( const std::vector<std::vector<T>>& x ) : data ( x ) {}
 
     template <typename other>
     matrix ( matrix<other> x ) : data (
@@ -40,12 +47,6 @@ struct matrix {
         return result;
     } ()
     ) {}
-
-    matrix ( const matrix& x ) = default;
-    matrix ( matrix&& ) noexcept = default;
-    matrix& operator= ( const matrix& x ) = default;
-    matrix& operator= ( matrix&& ) = default;
-    matrix() = default;
 
     auto reserve ( std::size_t size )
     {
@@ -82,6 +83,24 @@ struct matrix {
     auto columns() const
     {
         return data.begin()->size();
+    }
+
+    bool operator== ( const matrix &m )
+    {
+        if ( m.size() != size() ) return false;
+        auto own = begin();
+        for ( auto& other : m ) {
+            if ( other.size() != own->size() ) return false;
+            bool is_equal = std::equal ( own->begin(), own->end(), other.begin() );
+            if ( !is_equal ) return false;
+            own++;
+        }
+        return true;
+    }
+
+    bool operator!= ( const matrix &m )
+    {
+        return ! ( *this == m );
     }
 private:
     std::vector<std::vector<T>> data;

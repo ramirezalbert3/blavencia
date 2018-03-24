@@ -14,7 +14,7 @@ TEST ( matrix_test, basic )
 
 }
 
-TEST ( csv_parser, basic )
+TEST ( csv_parser, parsing_and_equality )
 {
     auto result = csv::parse ( "test.csv" );
 
@@ -24,7 +24,16 @@ TEST ( csv_parser, basic )
         {"wall", "empty", "wall"}
     };
 
-    EXPECT_EQ ( 0, std::memcmp ( &result, &expected, sizeof ( result ) ) );
+    const estd::matrix<std::string> unexpected {
+        {"empty", "empty", "wall"},
+        {"empty", "wall", "empty"},
+        {"wall", "empty", "wall"}
+    };
+
+    EXPECT_TRUE ( result == expected );
+    EXPECT_TRUE ( result != unexpected );
+    EXPECT_FALSE ( result != expected );
+    EXPECT_FALSE ( result == unexpected );
 }
 
 TEST ( csv_parser, fail_to_open_and_throw )
