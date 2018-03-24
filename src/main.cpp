@@ -19,15 +19,14 @@ int main()
                 world.close();
         }
 
-        auto movement_trial = player.try_to_move();
+        auto final_position = player.try_to_move();
 
-        auto movement = collision::limit_movement ( player.getPosition(),
-                              movement_trial,
-                              map );
+        collision::limit_movement ( player.getPosition(),
+                                    final_position,
+                                    map );
 
-//         auto final_position = movement_trial.getPosition();
-
-        player.move ( movement);
+        const auto movement = final_position.getPosition() - player.getPosition();
+        player.move ( movement );
 
         world.clear ( sf::Color::Black );
         map.draw ( world );
