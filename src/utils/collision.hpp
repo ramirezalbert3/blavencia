@@ -10,8 +10,10 @@ void move_out_collision_shortest_distance ( const sf::Vector2f& current_position
         sf::RectangleShape& final_position,
         const sf::FloatRect& intersection )
 {
-    if(intersection.width < 5 && intersection.height < 5) return;
-    sf::Vector2f correction = {};
+    // TODO: clean-up ignoring small collisions
+    //       (avoids getting stuck when sliding between cells)
+    if ( intersection.width < 5 && intersection.height < 5 ) return;
+    sf::Vector2f correction = {0, 0};
 
     const auto movement = final_position.getPosition() - current_position;
     const bool moving_left = ( movement.x < 0 );
@@ -20,9 +22,16 @@ void move_out_collision_shortest_distance ( const sf::Vector2f& current_position
     if ( intersection.width < intersection.height ) {
         correction = {intersection.width, 0};
         correction = moving_left ? correction : -correction;
-    } else if( intersection.width > intersection.height ){
+    } else if ( intersection.width > intersection.height ) {
         correction = {0, intersection.height};
         correction = moving_up ? correction : -correction;
+    } else {
+        correction += moving_up ?
+                      sf::Vector2f {0, intersection.height} :
+                      sf::Vector2f {0, -intersection.height};
+        correction += moving_left ?
+                      sf::Vector2f {intersection.width, 0} :
+                      sf::Vector2f {-intersection.width, 0};
     }
 
     final_position.move ( correction );
