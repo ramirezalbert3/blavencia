@@ -53,6 +53,14 @@ public:
     {
         return map_size_.y / cells.rows();
     }
+    auto begin() const
+    {
+        return cells.begin();
+    }
+    auto end() const
+    {
+        return cells.end();
+    }
 
     void draw ( sf::RenderWindow& target )
     {

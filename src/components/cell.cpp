@@ -21,7 +21,12 @@ void cell_t::draw ( sf::RenderWindow& target ) const
     target.draw ( impl_->shape_ );
 }
 
-auto cell_t::size() const
+sf::Vector2f cell_t::size() const
 {
     return impl_->shape_.getSize();
+}
+
+std::experimental::optional<sf::FloatRect> cell_t::bounding_rectangle() const
+{
+    return impl_->bounding_rectangle();
 }

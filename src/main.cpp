@@ -2,11 +2,12 @@
 #include "components/map.hpp"
 #include "components/character.hpp"
 #include "utils/csv.hpp"
+#include "utils/collision.hpp"
 
 int main()
 {
     map_t map {csv::parse ( "map1.csv" ), {800, 600}};
-    character_t player {{map.cell_width(), map.cell_height() }};
+    character_t player {{ map.cell_width(), map.cell_height() }};
 
     sf::RenderWindow world ( sf::VideoMode ( map.width(), map.height() ), "Blavencia" );
     world.setFramerateLimit ( 60 );
@@ -18,12 +19,22 @@ int main()
                 world.close();
         }
 
+        auto movement_trial = player.try_to_move();
+
+        auto movement = collision::limit_movement ( player.getPosition(),
+                              movement_trial,
+                              map );
+
+//         auto final_position = movement_trial.getPosition();
+
+        player.move ( movement);
+
         world.clear ( sf::Color::Black );
         map.draw ( world );
-        player.update();
         player.draw ( world );
         world.display();
     }
 
     return 0;
 }
+

@@ -4,30 +4,45 @@
 #include <SFML/Graphics.hpp>
 #include "utils/keyboard.hpp"
 
+constexpr float character_size_ratio = 0.9;
+
 class character_t {
 public:
-    character_t ( const sf::Vector2f& cell_size ) : shape_ ( cell_size * 0.98f )
+    character_t ( const sf::Vector2f& cell_size ) : shape_ ( cell_size * character_size_ratio )
     {
-        shape_.setPosition ( cell_size );
+        shape_.setPosition ( cell_size * 2.0f );
         shape_.setFillColor ( sf::Color::Red );
     }
 
-    void update ( )
+    auto try_to_move() const
     {
-        sf::Vector2f movement = {keyboard::move_with_arrows().x * speed_.x,
-                                 keyboard::move_with_arrows().y * speed_.y
-                                };
-        shape_.move ( movement );
+        auto movement = sf::Vector2f {keyboard::move_with_arrows().x * speed_.x,
+                                      keyboard::move_with_arrows().y * speed_.y
+                                     };
+        auto movement_trial = shape_;
+        movement_trial.move ( movement );
+
+        return movement_trial;
     }
 
-    void draw ( sf::RenderWindow& target )
+    auto move ( const sf::Vector2f& movement )
     {
-        target.draw ( shape_ );
+        return shape_.move ( movement );
     }
 
-    sf::Vector2f getPosition() const
+    auto draw ( sf::RenderWindow& target )
+    {
+        return target.draw ( shape_ );
+    }
+
+    auto getPosition() const
     {
         return shape_.getPosition();
+    }
+
+    auto getGlobalBounds() const
+    {
+        return shape_.getGlobalBounds();
     }
 
 private:

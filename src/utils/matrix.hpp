@@ -68,11 +68,11 @@ struct matrix {
     {
         return data.begin();
     }
-    auto end() const
+    auto end()
     {
         return data.end();
     }
-    auto end()
+    auto end() const
     {
         return data.end();
     }

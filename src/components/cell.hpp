@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include <experimental/optional>
 #include <SFML/Graphics.hpp>
 
 class cell_t {
@@ -10,6 +11,7 @@ public:
     struct cell_impl_t {
         virtual ~cell_impl_t() = default;
         virtual std::unique_ptr<cell_impl_t> copy() const = 0;
+        virtual std::experimental::optional<sf::FloatRect> bounding_rectangle() const = 0;
         sf::RectangleShape shape_ {sf::Vector2f{5, 5}};
     };
 
@@ -22,6 +24,10 @@ public:
         {
             return std::make_unique<empty> ( *this );
         };
+        std::experimental::optional<sf::FloatRect> bounding_rectangle() const override
+        {
+            return std::experimental::nullopt;
+        }
     };
 
     struct wall : public cell_impl_t {
@@ -33,6 +39,10 @@ public:
         {
             return std::make_unique<wall> ( *this );
         };
+        std::experimental::optional<sf::FloatRect> bounding_rectangle() const override
+        {
+            return std::experimental::optional<sf::FloatRect>{shape_.getGlobalBounds()};
+        }
     };
 
     cell_t() : impl_ ( std::make_unique<empty> ( empty {} ) ) {}
@@ -54,8 +64,9 @@ public:
     cell_t& operator= ( cell_t&& ) = default;
 
     void setPosition ( float x, float y );
-    void setSize (float width, float height);
-    auto size() const;
+    void setSize ( float width, float height );
+    sf::Vector2f size() const;
+    std::experimental::optional<sf::FloatRect> bounding_rectangle() const;
     void draw ( sf::RenderWindow& target ) const;
 
 private:
