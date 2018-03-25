@@ -8,22 +8,7 @@ class map_t {
 public:
     map_t ( estd::matrix<cell_t> map,
             sf::Vector2f map_size,
-            const textures::texture_map& textures ) : cells ( map ), map_size_ ( map_size )
-    {
-        const auto cell_width = map_size.x / map.columns();
-        const auto cell_height = map_size.y / map.rows();
-        std::size_t y = 0;
-        for ( auto &row : cells ) {
-            std::size_t x = 0;
-            for ( auto &cell : row ) {
-                cell.setSize ( cell_width, cell_height );
-                cell.setPosition ( x * cell_width, y * cell_height );
-                cell.setTexture ( textures );
-                x++;
-            }
-            y++;
-        }
-    }
+            const textures::texture_map& textures );
 
     map_t ( std::initializer_list<std::initializer_list<cell_t>> map,
             sf::Vector2f map_size,
@@ -38,25 +23,10 @@ public:
     map_t& operator= ( const map_t& x ) = default;
     map_t& operator= ( map_t&& ) = default;
 
-    auto width() const
-    {
-        return map_size_.x;
-    }
-
-    auto height() const
-    {
-        return map_size_.y;
-    }
-
-    auto cell_width() const
-    {
-        return map_size_.x / cells.columns();
-    }
-
-    auto cell_height() const
-    {
-        return map_size_.y / cells.rows();
-    }
+    float width() const;
+    float height() const;
+    float cell_width() const;
+    float cell_height() const;
     auto begin() const
     {
         return cells.begin();
@@ -66,14 +36,7 @@ public:
         return cells.end();
     }
 
-    void draw ( sf::RenderWindow& target )
-    {
-        for ( const auto &cells_row : cells ) {
-            for ( const auto &cell : cells_row ) {
-                cell.draw ( target );
-            }
-        }
-    }
+    void draw ( sf::RenderWindow& target );
 
 private:
     estd::matrix<cell_t> cells;

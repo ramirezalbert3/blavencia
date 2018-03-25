@@ -3,7 +3,7 @@
 
 #include <initializer_list>
 #include <vector>
-#include <exception>
+#include <stdexcept>
 #include <string>
 
 namespace estd {

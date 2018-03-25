@@ -1,5 +1,7 @@
 add_library(blavencia_lib
                 components/cell.cpp
+                components/map.cpp
+                components/character.cpp
                 engine/collision.cpp
                 engine/textures.cpp)
 
