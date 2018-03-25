@@ -45,6 +45,20 @@ std::vector<const cell_t*> collision::surrounding_cells ( const sf::FloatRect& o
     return cells;
 }
 
+std::experimental::optional<sf::FloatRect> collision::detect_collision (
+    const sf::FloatRect& object, const cell_t& cell )
+{
+    auto cell_bounds = cell.bounding_rectangle();
+    if ( !cell_bounds ) return std::experimental::nullopt;
+
+    sf::FloatRect intersection;
+
+    auto collision_detected = object.intersects ( cell_bounds.value(),  intersection );
+    if ( !collision_detected ) return std::experimental::nullopt;
+
+    return intersection;
+}
+
 sf::RectangleShape collision::move_out_collision_shortest_distance ( const sf::RectangleShape& tried_location,
         const sf::Vector2f& movement_speed,
         const sf::FloatRect& intersection )
@@ -112,18 +126,14 @@ sf::RectangleShape collision::limit_with_collisions ( const sf::RectangleShape& 
     unsigned intersections_count = 0;
 
     for ( const auto cell : surrounding_cells ) {
-        if ( auto cell_bounds = cell->bounding_rectangle() ) {
-            sf::FloatRect intersection;
-            if ( final_location.getGlobalBounds().intersects ( cell_bounds.value(),  intersection ) ) {
-                intersections_count++;
-                final_location = move_out_collision_shortest_distance ( final_location,
-                                 movement_speed, intersection );
-            }
+        if ( auto intersection = detect_collision ( final_location.getGlobalBounds(), *cell ) ) {
+            intersections_count++;
+            final_location = move_out_collision_shortest_distance ( final_location,
+                             movement_speed, intersection.value() );
         }
     }
 
-    if ( intersections_count > 4 ) {
-        // 4 intersections are possible when angled against a corner!
+    if ( intersections_count > 4 ) { // 4 intersections are possible when angled against a corner!
         const std::string msg = "Found " + std::to_string ( intersections_count ) + " intersections!";
         throw std::runtime_error ( msg );
     }
