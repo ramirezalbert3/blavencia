@@ -2,8 +2,10 @@ add_library(blavencia_lib
                 components/cell.cpp
                 components/map.cpp
                 components/character.cpp
+                components/projectile.cpp
                 engine/collision.cpp
-                engine/textures.cpp)
+                engine/textures.cpp
+                engine/controls.cpp)
 
 set_property(TARGET blavencia_lib PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_include_directories(blavencia_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

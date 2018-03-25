@@ -20,8 +20,8 @@ character_t::character_t ( const sf::Vector2f& cell_size ) :
 
 sf::RectangleShape character_t::try_to_move() const
 {
-    auto movement = sf::Vector2f {controls::arrow_directions().x * speed_.x,
-                                  controls::arrow_directions().y * speed_.y
+    auto movement = sf::Vector2f {controls::keyboard_directions().x * speed_.x,
+                                  controls::keyboard_directions().y * speed_.y
                                  };
     auto movement_trial = shape_;
     movement_trial.move ( movement );
@@ -54,4 +54,9 @@ sf::FloatRect character_t::getGlobalBounds() const
 sf::Vector2f character_t::speed() const
 {
     return speed_;
+}
+
+float character_t::angle() const
+{
+    return shape_.getRotation();
 }

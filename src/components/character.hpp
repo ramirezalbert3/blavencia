@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-
 class character_t {
 public:
     character_t ( const sf::Vector2f& cell_size );
@@ -17,6 +16,7 @@ public:
     sf::FloatRect getGlobalBounds() const;
 
     sf::Vector2f speed() const;
+    float angle() const;
 
 private:
     sf::RectangleShape shape_;
