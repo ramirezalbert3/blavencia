@@ -70,6 +70,13 @@ public:
     std::experimental::optional<sf::FloatRect> bounding_rectangle() const;
     void draw ( sf::RenderWindow& target ) const;
 
+#ifdef __debug__
+    void paint()
+    {
+        impl_->shape_.setFillColor ( sf::Color::Blue );
+    }
+#endif // __debug__
+
 private:
     std::unique_ptr<cell_impl_t> impl_;
 };

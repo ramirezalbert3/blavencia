@@ -1,10 +1,11 @@
-#include "engine/collision.hpp"
+#include <boost/range/iterator_range.hpp>
 #include <SFML/Graphics.hpp>
+
+#include "engine/collision.hpp"
 #include "components/map.hpp"
 
-std::vector<const cell_t*> collision::surrounding_cells (
-    const sf::FloatRect& object,
-    const map_t& map )
+std::vector<const cell_t*> collision::surrounding_cells ( const sf::FloatRect& object,
+        const map_t& map )
 {
     std::vector<const cell_t*> cells;
     cells.reserve ( 9 );
@@ -26,16 +27,17 @@ std::vector<const cell_t*> collision::surrounding_cells (
 
     const auto row = std::find_if ( map.begin(), map.end(), is_in_this_row );
 
-    const auto range_begin = ( row == map.begin() ) ? map.begin() : row - 1;
-    const auto range_end = ( row >= map.end()-1 ) ? map.end()-1 : row + 1;
+    const auto begin = ( row == map.begin() ) ? map.begin() : row - 1;
+    const auto end = ( row >= map.end()-1 ) ? map.end() : row + 2; // 1 past range end
+    auto range = boost::iterator_range<decltype ( begin ) > ( begin, end );
 
-    for ( auto it = range_begin; it<=range_end; ++it ) {
-        const auto col = std::find_if ( it->begin(), it->end(), is_in_this_col );
+    for ( auto & it : range) {
+        const auto col = std::find_if ( it.begin(), it.end(), is_in_this_col );
         cells.push_back ( & ( *col ) );
-        if ( col != it->begin() ) {
+        if ( col != it.begin() ) {
             cells.push_back ( & ( * ( col-1 ) ) );
         }
-        if ( col >= it->end()-1 ) {
+        if ( col <= it.end()-2 ) {
             cells.push_back ( & ( * ( col+1 ) ) );
         }
     }

@@ -31,6 +31,12 @@ int main()
 
         player.move ( movement );
 
+#ifdef __debug__
+        auto surrounding_cells = collision::surrounding_cells ( player.getGlobalBounds(), map ) ;
+        for ( auto& cell : surrounding_cells )
+            const_cast<cell_t*> ( cell )->paint();
+#endif // __debug__
+
         world.clear ( sf::Color::Black );
         map.draw ( world );
         player.draw ( world );
