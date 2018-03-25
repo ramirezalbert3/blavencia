@@ -33,7 +33,7 @@ int main()
                               player.speed(),
                               map );
 
-        player.move ( movement );
+        player.move ( movement, world );
 
 #ifdef __debug__
         auto surrounding_cells = collision::surrounding_cells ( player.getGlobalBounds(), map ) ;

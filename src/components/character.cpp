@@ -1,7 +1,7 @@
 #include "components/character.hpp"
 #include "engine/controls.hpp"
 
-constexpr float character_size_ratio = 0.9;
+constexpr float character_size_ratio = 0.7;
 
 character_t::character_t ( const sf::Vector2f& cell_size ) :
     shape_ ( cell_size * character_size_ratio ),
@@ -29,10 +29,10 @@ sf::RectangleShape character_t::try_to_move() const
     return movement_trial;
 }
 
-void character_t::move ( const sf::Vector2f& movement )
+void character_t::move ( const sf::Vector2f& movement, const sf::RenderWindow& window )
 {
     shape_.move ( movement );
-    auto angle = controls::mouse_relative_angle ( shape_.getPosition() );
+    auto angle = controls::mouse_relative_angle ( shape_.getPosition(), window );
     shape_.setRotation ( angle );
 }
 

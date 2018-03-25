@@ -23,11 +23,11 @@ sf::Vector2f arrow_directions()
     return direction;
 }
 
-float mouse_relative_angle ( const sf::Vector2f& object_position )
+float mouse_relative_angle ( const sf::Vector2f& object_position, const sf::RenderWindow& window )
 {
     const sf::Vector2f mouse_rel_pos {
-        sf::Mouse::getPosition().x - object_position.x,
-        sf::Mouse::getPosition().y- object_position.y
+        sf::Mouse::getPosition ( window ).x - object_position.x,
+        sf::Mouse::getPosition ( window ).y - object_position.y
     };
     const auto mouse_rel_pos_magnitude = std::sqrt ( mouse_rel_pos.x*mouse_rel_pos.x
                                          + mouse_rel_pos.y*mouse_rel_pos.y );

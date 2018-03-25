@@ -9,7 +9,7 @@ public:
     character_t ( const sf::Vector2f& cell_size );
 
     sf::RectangleShape try_to_move() const;
-    void move ( const sf::Vector2f& movement );
+    void move ( const sf::Vector2f& movement, const sf::RenderWindow& window );
 
     void draw ( sf::RenderWindow& target );
 
