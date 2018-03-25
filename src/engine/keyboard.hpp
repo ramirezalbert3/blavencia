@@ -1,5 +1,5 @@
-#ifndef BLAVENCIA_UTILS_KEYBOARD_HPP
-#define BLAVENCIA_UTILS_KEYBOARD_HPP
+#ifndef BLAVENCIA_ENGINE_KEYBOARD_HPP
+#define BLAVENCIA_ENGINE_KEYBOARD_HPP
 
 #include <SFML/Graphics.hpp>
 
@@ -24,4 +24,4 @@ sf::Vector2f move_with_arrows()
 
 }
 
-#endif // BLAVENCIA_UTILS_KEYBOARD_HPP
+#endif // BLAVENCIA_ENGINE_KEYBOARD_HPP

@@ -1,5 +1,5 @@
-#ifndef BLAVENCIA_UTILS_COLLISION_HPP
-#define BLAVENCIA_UTILS_COLLISION_HPP
+#ifndef BLAVENCIA_ENGINE_COLLISION_HPP
+#define BLAVENCIA_ENGINE_COLLISION_HPP
 
 #include <vector>
 
@@ -42,4 +42,4 @@ sf::Vector2f limit_movement ( const sf::RectangleShape& tried_location,
 
 }
 
-#endif // BLAVENCIA_UTILS_COLLISION_HPP
+#endif // BLAVENCIA_ENGINE_COLLISION_HPP

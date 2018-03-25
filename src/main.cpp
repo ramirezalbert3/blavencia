@@ -1,3 +1,8 @@
+#include <map>
+#include <string>
+#include <vector>
+#include <utility>
+
 #include <SFML/Graphics.hpp>
 
 #include "components/map.hpp"
@@ -10,6 +15,17 @@
 int main()
 {
     map_t map {csv::parse ( "maps/map1.csv" ), {800, 600}};
+
+    std::map<std::string, sf::Texture> textures;
+    const std::vector<std::pair<std::string, std::string>> textures_pairs {{"empty", "grass"}, {"wall", "bricks"}};
+
+    for ( auto & pair : textures_pairs ) {
+        sf::Texture temporary;
+        const std::string filepath = "textures/" + pair.second + ".jpg";
+        temporary.loadFromFile ( filepath );
+        textures[pair.first] = temporary;
+    }
+
     character_t player {{ map.cell_width(), map.cell_height() }};
 
     sf::RenderWindow world ( sf::VideoMode ( map.width(), map.height() ), "Blavencia" );
@@ -45,5 +61,3 @@ int main()
 
     return 0;
 }
-
-

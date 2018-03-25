@@ -2,7 +2,7 @@
 #define BLAVENCIA_COMPONENTS_CHARACTER_HPP
 
 #include <SFML/Graphics.hpp>
-#include "utils/keyboard.hpp"
+#include "engine/keyboard.hpp"
 
 constexpr float character_size_ratio = 0.9;
 
