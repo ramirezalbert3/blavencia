@@ -70,6 +70,15 @@ public:
             }
         }
     }
+    
+    void set_textures(const textures::texture_map& map)
+    {
+        for ( auto &cells_row : cells ) {
+            for ( auto &cell : cells_row ) {
+                cell.setTexture ( map );
+            }
+        }
+    }
 
 private:
     estd::matrix<cell_t> cells;

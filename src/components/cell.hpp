@@ -6,19 +6,26 @@
 #include <experimental/optional>
 #include <SFML/Graphics.hpp>
 
+#include "engine/textures.hpp"
+
 class cell_t {
 public:
     struct cell_impl_t {
         virtual ~cell_impl_t() = default;
         virtual std::unique_ptr<cell_impl_t> copy() const = 0;
         virtual std::experimental::optional<sf::FloatRect> bounding_rectangle() const = 0;
+        virtual void setTexture ( const textures::texture_map& map ) = 0;
         sf::RectangleShape shape_ {sf::Vector2f{5, 5}};
     };
 
     struct empty : public cell_impl_t {
         empty()
         {
-            shape_.setFillColor ( sf::Color::Black );
+//             shape_.setFillColor ( sf::Color::Black );
+        }
+        void setTexture(const textures::texture_map& map) override
+        {
+            shape_.setTexture(&map.at("empty"));
         }
         std::unique_ptr<cell_impl_t> copy() const override
         {
@@ -33,7 +40,11 @@ public:
     struct wall : public cell_impl_t {
         wall()
         {
-            shape_.setFillColor ( sf::Color::Green );
+//             shape_.setFillColor ( sf::Color::Green );
+        }
+        void setTexture(const textures::texture_map& map) override
+        {
+            shape_.setTexture(&map.at("wall"));
         }
         std::unique_ptr<cell_impl_t> copy() const override
         {
@@ -69,6 +80,10 @@ public:
     sf::Vector2f getPosition() const;
     std::experimental::optional<sf::FloatRect> bounding_rectangle() const;
     void draw ( sf::RenderWindow& target ) const;
+    void setTexture(const textures::texture_map& map)
+    {
+        impl_->setTexture(map);
+    }
 
 #ifdef __debug__
     void paint()
