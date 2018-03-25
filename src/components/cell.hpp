@@ -19,41 +19,15 @@ public:
     };
 
     struct empty : public cell_impl_t {
-        empty()
-        {
-//             shape_.setFillColor ( sf::Color::Black );
-        }
-        void setTexture(const textures::texture_map& map) override
-        {
-            shape_.setTexture(&map.at("empty"));
-        }
-        std::unique_ptr<cell_impl_t> copy() const override
-        {
-            return std::make_unique<empty> ( *this );
-        };
-        std::experimental::optional<sf::FloatRect> bounding_rectangle() const override
-        {
-            return std::experimental::nullopt;
-        }
+        void setTexture ( const textures::texture_map& map ) override;
+        std::unique_ptr<cell_impl_t> copy() const override;
+        std::experimental::optional<sf::FloatRect> bounding_rectangle() const override;
     };
 
     struct wall : public cell_impl_t {
-        wall()
-        {
-//             shape_.setFillColor ( sf::Color::Green );
-        }
-        void setTexture(const textures::texture_map& map) override
-        {
-            shape_.setTexture(&map.at("wall"));
-        }
-        std::unique_ptr<cell_impl_t> copy() const override
-        {
-            return std::make_unique<wall> ( *this );
-        };
-        std::experimental::optional<sf::FloatRect> bounding_rectangle() const override
-        {
-            return std::experimental::optional<sf::FloatRect> {shape_.getGlobalBounds() };
-        }
+        void setTexture ( const textures::texture_map& map ) override;
+        std::unique_ptr<cell_impl_t> copy() const override;
+        std::experimental::optional<sf::FloatRect> bounding_rectangle() const override;
     };
 
     cell_t() : impl_ ( std::make_unique<empty> ( empty {} ) ) {}
@@ -80,10 +54,7 @@ public:
     sf::Vector2f getPosition() const;
     std::experimental::optional<sf::FloatRect> bounding_rectangle() const;
     void draw ( sf::RenderWindow& target ) const;
-    void setTexture(const textures::texture_map& map)
-    {
-        impl_->setTexture(map);
-    }
+    void setTexture ( const textures::texture_map& map );
 
 #ifdef __debug__
     void paint()

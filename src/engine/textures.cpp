@@ -12,7 +12,6 @@ textures::texture_map textures::load_texture_map ( const textures::texture_pairs
             const std::string msg = "Could not open " + filepath;
             throw std::runtime_error ( msg );
         }
-
         textures[pair.first] = temporary;
     }
     return textures;

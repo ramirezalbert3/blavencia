@@ -58,5 +58,3 @@ private:
 };
 
 #endif // BLAVENCIA_COMPONENTS_CHARACTER_HPP
-
-

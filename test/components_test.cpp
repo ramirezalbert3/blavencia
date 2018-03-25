@@ -5,7 +5,11 @@
 
 TEST ( map, from_csv )
 {
-    map_t map {csv::parse ( "test.csv" ), {5, 5}};
+    textures::texture_map textures;
+    textures["empty"] = sf::Texture{};
+    textures["wall"] = sf::Texture{};
+
+    map_t map {csv::parse ( "test.csv" ), {5, 5}, textures};
 }
 
 TEST ( cell, from_string )

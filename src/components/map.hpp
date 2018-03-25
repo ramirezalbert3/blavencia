@@ -7,7 +7,8 @@
 class map_t {
 public:
     map_t ( estd::matrix<cell_t> map,
-            sf::Vector2f map_size ) : cells ( map ), map_size_ ( map_size )
+            sf::Vector2f map_size,
+            const textures::texture_map& textures ) : cells ( map ), map_size_ ( map_size )
     {
         const auto cell_width = map_size.x / map.columns();
         const auto cell_height = map_size.y / map.rows();
@@ -17,6 +18,7 @@ public:
             for ( auto &cell : row ) {
                 cell.setSize ( cell_width, cell_height );
                 cell.setPosition ( x * cell_width, y * cell_height );
+                cell.setTexture ( textures );
                 x++;
             }
             y++;
@@ -24,10 +26,12 @@ public:
     }
 
     map_t ( std::initializer_list<std::initializer_list<cell_t>> map,
-            sf::Vector2f map_size ) : map_t ( estd::matrix<cell_t> {map}, map_size ) {}
+            sf::Vector2f map_size,
+            const textures::texture_map& textures ) : map_t ( estd::matrix<cell_t> {map}, map_size, textures ) {}
 
     map_t ( estd::matrix<std::string> map,
-            sf::Vector2f map_size ) : map_t ( estd::matrix<cell_t> {map}, map_size ) {}
+            sf::Vector2f map_size,
+            const textures::texture_map& textures ) : map_t ( estd::matrix<cell_t> {map}, map_size, textures ) {}
 
     map_t ( const map_t& x ) = default;
     map_t ( map_t&& ) noexcept = default;
@@ -67,15 +71,6 @@ public:
         for ( const auto &cells_row : cells ) {
             for ( const auto &cell : cells_row ) {
                 cell.draw ( target );
-            }
-        }
-    }
-    
-    void set_textures(const textures::texture_map& map)
-    {
-        for ( auto &cells_row : cells ) {
-            for ( auto &cell : cells_row ) {
-                cell.setTexture ( map );
             }
         }
     }

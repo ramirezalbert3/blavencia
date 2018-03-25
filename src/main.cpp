@@ -10,11 +10,9 @@
 
 int main()
 {
-    map_t map {csv::parse ( "maps/map1.csv" ), {800, 600}};
-
     auto texture_map = textures::load_texture_map ( {{"empty", "grass"}, {"wall", "bricks"}} );
 
-    map.set_textures ( texture_map );
+    map_t map {csv::parse ( "maps/map1.csv" ), {800, 600}, texture_map};
 
     character_t player {{ map.cell_width(), map.cell_height() }};
 
