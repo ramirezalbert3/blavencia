@@ -34,7 +34,7 @@ int main()
 #ifdef __debug__
         auto surrounding_cells = collision::surrounding_cells ( player.getGlobalBounds(), map ) ;
         for ( auto& cell : surrounding_cells )
-            const_cast<cell_t*> ( cell )->paint();
+            const_cast<cell_t*> ( cell )->dbg_paint();
 #endif // __debug__
 
         world.clear ( sf::Color::Black );

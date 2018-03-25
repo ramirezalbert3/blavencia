@@ -33,7 +33,7 @@ sf::RectangleShape limit_with_edges ( const sf::RectangleShape& tried_location,
 
 sf::RectangleShape limit_with_collisions ( const sf::RectangleShape& tried_location,
         const sf::Vector2f& movement_speed,
-        const map_t& map );
+        const std::vector<const cell_t*>& surrounding_cells );
 
 sf::Vector2f limit_movement ( const sf::RectangleShape& tried_location,
                               const sf::Vector2f& current_position,

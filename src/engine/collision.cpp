@@ -31,7 +31,7 @@ std::vector<const cell_t*> collision::surrounding_cells ( const sf::FloatRect& o
     const auto end = ( row >= map.end()-1 ) ? map.end() : row + 2; // 1 past range end
     auto range = boost::iterator_range<decltype ( begin ) > ( begin, end );
 
-    for ( auto & it : range) {
+    for ( auto & it : range ) {
         const auto col = std::find_if ( it.begin(), it.end(), is_in_this_col );
         cells.push_back ( & ( *col ) );
         if ( col != it.begin() ) {
@@ -106,19 +106,18 @@ sf::RectangleShape collision::limit_with_edges ( const sf::RectangleShape& tried
 
 sf::RectangleShape collision::limit_with_collisions ( const sf::RectangleShape& tried_location,
         const sf::Vector2f& movement_speed,
-        const map_t& map )
+        const std::vector<const cell_t*>& surrounding_cells )
 {
     auto final_location = tried_location;
     unsigned intersections_count = 0;
-    for ( const auto & row : map ) {
-        for ( const auto & cell : row ) {
-            if ( auto cell_bounds = cell.bounding_rectangle() ) {
-                sf::FloatRect intersection;
-                if ( final_location.getGlobalBounds().intersects ( cell_bounds.value(),  intersection ) ) {
-                    intersections_count++;
-                    final_location = move_out_collision_shortest_distance ( final_location,
-                                     movement_speed, intersection );
-                }
+
+    for ( const auto cell : surrounding_cells ) {
+        if ( auto cell_bounds = cell->bounding_rectangle() ) {
+            sf::FloatRect intersection;
+            if ( final_location.getGlobalBounds().intersects ( cell_bounds.value(),  intersection ) ) {
+                intersections_count++;
+                final_location = move_out_collision_shortest_distance ( final_location,
+                                 movement_speed, intersection );
             }
         }
     }
@@ -135,10 +134,10 @@ sf::Vector2f collision::limit_movement ( const sf::RectangleShape& tried_locatio
 {
     if ( tried_location.getPosition() == current_position ) return {0, 0};
 
-    // auto surrounding_cells = surrounding_cells ( player.getGlobalBounds(), map ) ;
+    const auto surrounding_cells = collision::surrounding_cells ( tried_location.getGlobalBounds(), map ) ;
     auto final_location = collision::limit_with_collisions ( tried_location,
                           movement_speed,
-                          map );
+                          surrounding_cells );
 
     final_location = collision::limit_with_edges ( final_location,
                      current_position, {map.width(), map.height() } );
