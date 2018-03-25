@@ -3,8 +3,9 @@
 #include "components/map.hpp"
 #include "components/character.hpp"
 
+#include "engine/collision.hpp"
+
 #include "utils/csv.hpp"
-#include "utils/collision.hpp"
 #include "utils/surroundings.hpp"
 
 int main()
