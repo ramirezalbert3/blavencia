@@ -9,7 +9,7 @@
 
 int main()
 {
-    map_t map {csv::parse ( "map1.csv" ), {800, 600}};
+    map_t map {csv::parse ( "maps/map1.csv" ), {800, 600}};
     character_t player {{ map.cell_width(), map.cell_height() }};
 
     sf::RenderWindow world ( sf::VideoMode ( map.width(), map.height() ), "Blavencia" );
