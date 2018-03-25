@@ -46,10 +46,12 @@ void cell_t::empty::setTexture ( const textures::texture_map& map )
 {
     shape_.setTexture ( &map.at ( "empty" ) );
 }
+
 std::unique_ptr<cell_t::cell_impl_t> cell_t::empty::copy() const
 {
     return std::make_unique<empty> ( *this );
-};
+}
+
 std::experimental::optional<sf::FloatRect> cell_t::empty::bounding_rectangle() const
 {
     return std::experimental::nullopt;
@@ -60,10 +62,12 @@ void cell_t::wall::setTexture ( const textures::texture_map& map )
 {
     shape_.setTexture ( &map.at ( "wall" ) );
 }
+
 std::unique_ptr<cell_t::cell_impl_t> cell_t::wall::copy() const
 {
     return std::make_unique<wall> ( *this );
-};
+}
+
 std::experimental::optional<sf::FloatRect> cell_t::wall::bounding_rectangle() const
 {
     return std::experimental::optional<sf::FloatRect> {shape_.getGlobalBounds() };

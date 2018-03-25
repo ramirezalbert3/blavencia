@@ -12,7 +12,7 @@ int main()
 {
     auto texture_map = textures::load_texture_map ( {{"empty", "grass"}, {"wall", "bricks"}} );
 
-    map_t map {csv::parse ( "maps/map1.csv" ), {800, 600}, texture_map};
+    map_t map {csv::parse ( "maps/map1.csv" ), {600, 600}, texture_map};
 
     character_t player {{ map.cell_width(), map.cell_height() }};
 
