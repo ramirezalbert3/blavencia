@@ -122,7 +122,11 @@ sf::RectangleShape collision::limit_with_collisions ( const sf::RectangleShape& 
         }
     }
 
-    if ( intersections_count > 3 ) throw std::runtime_error ( "Found more than 3 intersections!" );
+    if ( intersections_count > 4 ) {
+        // 4 intersections are possible when angled against a corner!
+        const std::string msg = "Found " + std::to_string ( intersections_count ) + " intersections!";
+        throw std::runtime_error ( msg );
+    }
 
     return final_location;
 }

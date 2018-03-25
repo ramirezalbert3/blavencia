@@ -1,5 +1,5 @@
 #include "components/character.hpp"
-#include "engine/keyboard.hpp"
+#include "engine/controls.hpp"
 
 constexpr float character_size_ratio = 0.9;
 
@@ -7,14 +7,21 @@ character_t::character_t ( const sf::Vector2f& cell_size ) :
     shape_ ( cell_size * character_size_ratio ),
     speed_ ( cell_size / 10.f )
 {
-    shape_.setPosition ( cell_size );
+    const auto recangle = shape_.getGlobalBounds();
+    const sf::Vector2f midpoint {
+        recangle.left + recangle.width/2,
+                      recangle.top + recangle.height/2
+    };
+    shape_.setOrigin ( midpoint );
+
+    shape_.setPosition ( cell_size * 2.f );
     shape_.setFillColor ( sf::Color::Red );
 }
 
 sf::RectangleShape character_t::try_to_move() const
 {
-    auto movement = sf::Vector2f {keyboard::move_with_arrows().x * speed_.x,
-                                  keyboard::move_with_arrows().y * speed_.y
+    auto movement = sf::Vector2f {controls::arrow_directions().x * speed_.x,
+                                  controls::arrow_directions().y * speed_.y
                                  };
     auto movement_trial = shape_;
     movement_trial.move ( movement );
@@ -25,6 +32,8 @@ sf::RectangleShape character_t::try_to_move() const
 void character_t::move ( const sf::Vector2f& movement )
 {
     shape_.move ( movement );
+    auto angle = controls::mouse_relative_angle ( shape_.getPosition() );
+    shape_.setRotation ( angle );
 }
 
 void character_t::draw ( sf::RenderWindow& target )
