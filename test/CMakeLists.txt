@@ -5,7 +5,6 @@ function(generate_test test_name)
 message(STATUS "Generating " ${test_name})
 add_executable(${test_name} ${test_name}.cpp)
 
-target_include_directories(${test_name} PRIVATE ${ROOT_SRC_DIR})
 target_link_libraries(${test_name} GTest::GTest GTest::Main blavencia_lib)
 
 add_test(NAME ${test_name}

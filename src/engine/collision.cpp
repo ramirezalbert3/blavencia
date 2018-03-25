@@ -68,7 +68,7 @@ sf::RectangleShape collision::move_out_collision_shortest_distance ( const sf::R
     if ( intersection.width <= speed_with_margin.x && intersection.height <= speed_with_margin.y )
         return tried_location;
 
-    sf::Vector2f correction = {0, 0};
+    sf::Vector2f correction {0, 0};
 
     const sf::Vector2f midpoint {
         tried_location.getGlobalBounds().left + tried_location.getGlobalBounds().width/2,
