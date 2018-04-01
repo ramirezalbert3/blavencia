@@ -61,7 +61,7 @@ std::vector<const cell_t*> map_t::surrounding_cells ( const sf::Vector2f& point 
     const auto iter_pair = find_cell ( point );
     const auto row = std::get<0> ( iter_pair );
     const auto column = std::get<1> ( iter_pair );
-    const auto column_offset = column - row->begin();
+    const auto column_offset = std::distance ( row->begin(), column );
 
     const auto range_begin = ( row == begin() ) ? begin() : row - 1;
     const auto range_end = ( row >= end()-1 ) ? end() : row + 2; // 1 past range end
@@ -85,7 +85,7 @@ bool map_t::is_cell_empty ( const sf::Vector2f& point ) const
 {
     if ( point.x < 0 || point.x > width() ||
             point.y < 0 || point.y > height() ) {
-        using namespace std::string_literals;
+        using namespace std::string_literals; // NOLINT
         throw std::runtime_error ( "Position ["s + std::to_string ( point.x ) + ", "s +  std::to_string ( point.y ) + "]" +
                                    "out of map ["s +  std::to_string ( width() ) + ", "s +  std::to_string ( height() ) + "]" );
     }
@@ -95,3 +95,5 @@ bool map_t::is_cell_empty ( const sf::Vector2f& point ) const
 
     return cell->is_empty();
 }
+
+

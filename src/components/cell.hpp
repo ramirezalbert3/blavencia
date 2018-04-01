@@ -70,4 +70,3 @@ private:
 };
 
 #endif // BLAVENCIA_COMPONENTS_CELL_HPP
-

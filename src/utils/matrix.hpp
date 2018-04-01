@@ -22,7 +22,7 @@ struct matrix {
 
         const auto columns = list.begin()->size();
 
-        for ( auto l : list ) {
+        for ( auto &l : list ) {
             if ( columns != l.size() ) {
                 const std::string msg = "Not all columns are equal in size found " +
                                         std::to_string ( columns ) + " and " +
@@ -41,7 +41,7 @@ struct matrix {
     {
         std::vector<std::vector<T>> result;
         result.reserve ( x.size() );
-        for ( auto element : x ) {
+        for ( auto& element : x ) {
             result.push_back ( std::vector<T> {element.begin(), element.end() } );
         }
         return result;

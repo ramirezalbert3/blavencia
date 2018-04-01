@@ -86,7 +86,7 @@ sf::RectangleShape collision::limit_with_collisions ( const sf::RectangleShape& 
     auto final_location = tried_location;
     unsigned intersections_count = 0;
 
-    for ( const auto cell : surrounding_cells ) {
+    for ( const auto& cell : surrounding_cells ) {
         if ( auto intersection = detect_collision ( final_location.getGlobalBounds(), *cell ) ) {
             intersections_count++;
             final_location = move_out_collision_shortest_distance ( final_location,

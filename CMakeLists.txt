@@ -24,5 +24,7 @@ else()
   set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}" "-checks=*,-readability-*,-clang-analyzer-alpha.*")
 endif()
 
+set(DBG_DAT_PATH \"${CMAKE_CURRENT_SOURCE_DIR}/dat\")
+
 add_subdirectory(src)
 add_subdirectory(test)

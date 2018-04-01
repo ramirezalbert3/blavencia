@@ -26,7 +26,7 @@ void update_projectiles ( std::vector<projectile_t> &projectiles, const map_t& m
         };
         auto cells = map.surrounding_cells ( midpoint );
 
-        for ( const auto c : cells ) {
+        for ( const auto& c : cells ) {
             if ( collision::detect_collision ( rectangle, *c ) ) return true;
         }
         return false;
@@ -37,8 +37,9 @@ void update_projectiles ( std::vector<projectile_t> &projectiles, const map_t& m
 int main()
 {
     const auto texture_map = textures::load_texture_map ( {{"empty", "grass"}, {"wall", "bricks"}} );
-
-    map_t map {csv::parse ( "maps/map1.csv" ), {600, 600}, texture_map};
+    const std::string dat_path = DBG_DAT_PATH;
+    const std::string map_path = dat_path + std::string("/maps/map1.csv");
+    map_t map {csv::parse ( map_path ), {600, 600}, texture_map};
     const auto cell_size = sf::Vector2f {map.cell_width(), map.cell_height() };
 
     character_t player {cell_size};
