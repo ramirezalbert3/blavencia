@@ -41,15 +41,10 @@ int main()
 
         player.move ( movement, world );
 
-        if ( auto projectile = projectile_t::create_projetile (
-                                   cell_size,
-                                   player.getPosition(),
-                                   player.angle()
-                               ) ) {
-            projectiles.push_back ( projectile.value() );
-        }
-
-        update_projectiles ( projectiles, map );
+        create_projetiles ( projectiles,
+                            cell_size, player.getPosition(), player.angle() );
+        move_projectiles ( projectiles );
+        clean_projectiles ( projectiles, map );
 
 #ifdef __debug__
         auto surrounding_cells = map.surrounding_cells ( player.getGlobalBounds() ) ;

@@ -56,15 +56,24 @@ sf::FloatRect projectile_t::getGlobalBounds() const
     return shape_.getGlobalBounds();
 }
 
+void create_projetiles ( std::vector<projectile_t> &projectiles,
+                         const sf::Vector2f& cell_size,
+                         const sf::Vector2f& initial_position, float angle )
+{
+    if ( auto projectile = projectile_t::create_projetile (
+                               cell_size, initial_position, angle ) ) {
+        projectiles.push_back ( projectile.value() );
+    }
+}
+
 void clean_projectiles ( std::vector<projectile_t> &projectiles, const map_t& map )
 {
     auto it = std::begin ( projectiles );
     while ( it != std::end ( projectiles ) ) {
         const auto rectangle = it->getGlobalBounds();
-        auto cells = map.surrounding_cells ( rectangle );
+        const auto cells = map.surrounding_cells ( rectangle );
 
-        const bool projectile_collided = std::any_of ( cells.begin(),
-                                         cells.end(),
+        const bool projectile_collided = std::any_of ( cells.begin(), cells.end(),
         [&rectangle] ( const cell_t* cell ) {
             return collision::detect_collision ( rectangle, *cell );
         } );
@@ -78,12 +87,10 @@ void clean_projectiles ( std::vector<projectile_t> &projectiles, const map_t& ma
     }
 }
 
-void update_projectiles ( std::vector<projectile_t> &projectiles, const map_t& map )
+void move_projectiles ( std::vector<projectile_t> &projectiles )
 {
     std::for_each ( projectiles.begin(), projectiles.end(),
     [] ( projectile_t& p ) {
         p.move();
     } );
-
-    clean_projectiles ( projectiles, map );
 }

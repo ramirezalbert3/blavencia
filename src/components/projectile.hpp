@@ -25,7 +25,10 @@ private:
 };
 
 class map_t;
+void create_projetiles ( std::vector<projectile_t> &projectiles,
+                         const sf::Vector2f& cell_size,
+                         const sf::Vector2f& initial_position, float angle );
 void clean_projectiles ( std::vector<projectile_t> &projectiles, const map_t& map );
-void update_projectiles ( std::vector<projectile_t> &projectiles, const map_t& map );
+void move_projectiles ( std::vector<projectile_t> &projectiles );
 
 #endif // BLAVENCIA_COMPONENTS_PROJECTILE_HPP
