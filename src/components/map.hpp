@@ -55,7 +55,7 @@ private:
 
         auto row = std::find_if ( begin(), end(), is_in_this_row );
         auto col = std::find_if ( row->begin(), row->end(), is_in_this_col );
-        return std::tie ( row, col );
+        return std::make_tuple ( row, col );
     }
     estd::matrix<cell_t> cells;
     sf::Vector2f map_size_ = {};
