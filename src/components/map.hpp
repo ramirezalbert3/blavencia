@@ -39,6 +39,7 @@ public:
     void draw ( sf::RenderWindow& target );
     bool is_cell_empty ( const sf::Vector2f& point ) const;
     std::vector<const cell_t*> surrounding_cells ( const sf::Vector2f& point ) const;
+    std::vector<const cell_t*> surrounding_cells ( const sf::FloatRect& rectangle ) const;
 
 private:
     auto find_cell ( const sf::Vector2f& point ) const

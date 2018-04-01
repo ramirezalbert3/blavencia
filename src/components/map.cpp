@@ -81,6 +81,15 @@ std::vector<const cell_t*> map_t::surrounding_cells ( const sf::Vector2f& point 
     return cells;
 }
 
+std::vector<const cell_t*> map_t::surrounding_cells ( const sf::FloatRect& rectangle ) const
+{
+    const sf::Vector2f midpoint {
+        rectangle.left + rectangle.width/2,
+                       rectangle.top + rectangle.height/2
+    };
+    return surrounding_cells(midpoint);
+}
+
 bool map_t::is_cell_empty ( const sf::Vector2f& point ) const
 {
     if ( point.x < 0 || point.x > width() ||

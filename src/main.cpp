@@ -16,36 +16,38 @@ void update_projectiles ( std::vector<projectile_t> &projectiles, const map_t& m
         p.move();
     } );
 
-    projectiles.erase (
-        std::remove_if ( projectiles.begin(), projectiles.end(),
-    [&map] ( projectile_t& p ) {
-        const auto rectangle = p.getGlobalBounds();
-        const sf::Vector2f midpoint {
-            rectangle.left + rectangle.width/2,
-                           rectangle.top + rectangle.height/2
-        };
-        auto cells = map.surrounding_cells ( midpoint );
+    auto it = std::begin ( projectiles );
+    while ( it != std::end ( projectiles ) ) {
+        const auto rectangle = it->getGlobalBounds();
+        auto cells = map.surrounding_cells ( rectangle );
 
-        for ( const auto& c : cells ) {
-            if ( collision::detect_collision ( rectangle, *c ) ) return true;
+        const bool projectile_collided = std::any_of ( cells.begin(),
+                                         cells.end(),
+        [&rectangle] ( const cell_t* cell ) {
+            return collision::detect_collision ( rectangle, *cell );
+        } );
+
+        if ( projectile_collided ) {
+            *it = projectiles.back();
+            projectiles.pop_back();
+        } else {
+            ++it;
         }
-        return false;
-    } ),
-    projectiles.end() );
+    }
 }
 
 int main()
 {
     const auto texture_map = textures::load_texture_map ( {{"empty", "grass"}, {"wall", "bricks"}} );
     const std::string dat_path = DBG_DAT_PATH;
-    const std::string map_path = dat_path + std::string("/maps/map1.csv");
+    const std::string map_path = dat_path + std::string ( "/maps/map1.csv" );
     map_t map {csv::parse ( map_path ), {600, 600}, texture_map};
     const auto cell_size = sf::Vector2f {map.cell_width(), map.cell_height() };
 
     character_t player {cell_size};
 
     std::vector<projectile_t> projectiles;
-    projectiles.reserve ( 64 ); // TODO: after the erase_remove this wont matter
+    projectiles.reserve ( 128 );
 
     sf::RenderWindow world ( sf::VideoMode ( map.width(), map.height() ), "Blavencia" );
     world.setFramerateLimit ( 60 );
@@ -77,12 +79,7 @@ int main()
         update_projectiles ( projectiles, map );
 
 #ifdef __debug__
-        const auto rectangle = player.getGlobalBounds();
-        const sf::Vector2f midpoint {
-            rectangle.left + rectangle.width/2,
-                           rectangle.top + rectangle.height/2
-        };
-        auto surrounding_cells = map. ( midpoint ) ;
+        auto surrounding_cells = map.surrounding_cells ( player.getGlobalBounds() ) ;
         for ( auto& cell : surrounding_cells )
             const_cast<cell_t*> ( cell )->dbg_paint();
 #endif // __debug__

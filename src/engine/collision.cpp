@@ -109,12 +109,7 @@ sf::Vector2f collision::limit_movement ( const sf::RectangleShape& tried_locatio
 {
     if ( tried_location.getPosition() == current_position ) return {0, 0};
 
-    const auto rectangle = tried_location.getGlobalBounds();
-    const sf::Vector2f midpoint {
-        rectangle.left + rectangle.width/2,
-                       rectangle.top + rectangle.height/2
-    };
-    const auto surrounding_cells = map.surrounding_cells ( midpoint ) ;
+    const auto surrounding_cells = map.surrounding_cells ( tried_location.getGlobalBounds() ) ;
     auto final_location = collision::limit_with_collisions ( tried_location,
                           movement_speed,
                           surrounding_cells );
