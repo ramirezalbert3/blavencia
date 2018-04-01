@@ -19,11 +19,15 @@ void update_projectiles ( std::vector<projectile_t> &projectiles, const map_t& m
     projectiles.erase (
         std::remove_if ( projectiles.begin(), projectiles.end(),
     [&map] ( projectile_t& p ) {
-        const auto rect = p.getGlobalBounds();
-        auto cells = collision::surrounding_cells ( rect, map );
+        const auto rectangle = p.getGlobalBounds();
+        const sf::Vector2f midpoint {
+            rectangle.left + rectangle.width/2,
+                           rectangle.top + rectangle.height/2
+        };
+        auto cells = map.surrounding_cells ( midpoint );
 
         for ( const auto c : cells ) {
-            if ( collision::detect_collision ( rect, *c ) ) return true;
+            if ( collision::detect_collision ( rectangle, *c ) ) return true;
         }
         return false;
     } ),
@@ -32,7 +36,7 @@ void update_projectiles ( std::vector<projectile_t> &projectiles, const map_t& m
 
 int main()
 {
-    auto texture_map = textures::load_texture_map ( {{"empty", "grass"}, {"wall", "bricks"}} );
+    const auto texture_map = textures::load_texture_map ( {{"empty", "grass"}, {"wall", "bricks"}} );
 
     map_t map {csv::parse ( "maps/map1.csv" ), {600, 600}, texture_map};
     const auto cell_size = sf::Vector2f {map.cell_width(), map.cell_height() };
@@ -40,7 +44,7 @@ int main()
     character_t player {cell_size};
 
     std::vector<projectile_t> projectiles;
-    projectiles.reserve ( 64 );
+    projectiles.reserve ( 64 ); // TODO: after the erase_remove this wont matter
 
     sf::RenderWindow world ( sf::VideoMode ( map.width(), map.height() ), "Blavencia" );
     world.setFramerateLimit ( 60 );
@@ -72,7 +76,12 @@ int main()
         update_projectiles ( projectiles, map );
 
 #ifdef __debug__
-        auto surrounding_cells = collision::surrounding_cells ( player.getGlobalBounds(), map ) ;
+        const auto rectangle = player.getGlobalBounds();
+        const sf::Vector2f midpoint {
+            rectangle.left + rectangle.width/2,
+                           rectangle.top + rectangle.height/2
+        };
+        auto surrounding_cells = map. ( midpoint ) ;
         for ( auto& cell : surrounding_cells )
             const_cast<cell_t*> ( cell )->dbg_paint();
 #endif // __debug__

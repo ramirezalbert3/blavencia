@@ -13,8 +13,9 @@ public:
     struct cell_impl_t {
         virtual ~cell_impl_t() = default;
         virtual std::unique_ptr<cell_impl_t> copy() const = 0;
-        virtual std::experimental::optional<sf::FloatRect> bounding_rectangle() const = 0;
+        virtual std::experimental::optional<sf::FloatRect> bounding_rectangle() const;
         virtual void setTexture ( const textures::texture_map& map ) = 0;
+        virtual bool is_empty() const;
         sf::RectangleShape shape_ {sf::Vector2f{5, 5}};
     };
 
@@ -22,12 +23,12 @@ public:
         void setTexture ( const textures::texture_map& map ) override;
         std::unique_ptr<cell_impl_t> copy() const override;
         std::experimental::optional<sf::FloatRect> bounding_rectangle() const override;
+        bool is_empty() const override;
     };
 
     struct wall : public cell_impl_t {
         void setTexture ( const textures::texture_map& map ) override;
         std::unique_ptr<cell_impl_t> copy() const override;
-        std::experimental::optional<sf::FloatRect> bounding_rectangle() const override;
     };
 
     cell_t() : impl_ ( std::make_unique<empty> ( empty {} ) ) {}
@@ -55,6 +56,7 @@ public:
     std::experimental::optional<sf::FloatRect> bounding_rectangle() const;
     void draw ( sf::RenderWindow& target ) const;
     void setTexture ( const textures::texture_map& map );
+    bool is_empty() const;
 
 #ifdef __debug__
     void paint()
@@ -68,3 +70,4 @@ private:
 };
 
 #endif // BLAVENCIA_COMPONENTS_CELL_HPP
+

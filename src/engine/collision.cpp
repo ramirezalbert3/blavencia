@@ -1,49 +1,7 @@
-#include <boost/range/iterator_range.hpp>
 #include <SFML/Graphics.hpp>
 
 #include "engine/collision.hpp"
 #include "components/map.hpp"
-
-std::vector<const cell_t*> collision::surrounding_cells ( const sf::FloatRect& object,
-        const map_t& map )
-{
-    std::vector<const cell_t*> cells;
-    cells.reserve ( 9 );
-
-    const sf::Vector2f midpoint {
-        object.left + object.width/2,
-                    object.top + object.height/2
-    };
-
-    auto is_in_this_row = [&midpoint, &map] ( const std::vector<cell_t>& row ) {
-        return ( midpoint.y >= row[0].getPosition().y &&
-                 midpoint.y < row[0].getPosition().y + map.cell_height() );
-    };
-
-    auto is_in_this_col = [&midpoint] ( const cell_t& col ) {
-        return ( midpoint.x >= col.getPosition().x &&
-                 midpoint.x < col.getPosition().x + col.size().x );
-    };
-
-    const auto row = std::find_if ( map.begin(), map.end(), is_in_this_row );
-
-    const auto begin = ( row == map.begin() ) ? map.begin() : row - 1;
-    const auto end = ( row >= map.end()-1 ) ? map.end() : row + 2; // 1 past range end
-    auto range = boost::iterator_range<decltype ( begin ) > ( begin, end );
-
-    for ( auto & it : range ) {
-        const auto col = std::find_if ( it.begin(), it.end(), is_in_this_col );
-        cells.push_back ( & ( *col ) );
-        if ( col != it.begin() ) {
-            cells.push_back ( & ( * ( col-1 ) ) );
-        }
-        if ( col <= it.end()-2 ) {
-            cells.push_back ( & ( * ( col+1 ) ) );
-        }
-    }
-
-    return cells;
-}
 
 std::experimental::optional<sf::FloatRect> collision::detect_collision (
     const sf::FloatRect& object, const cell_t& cell )
@@ -65,8 +23,9 @@ sf::RectangleShape collision::move_out_collision_shortest_distance ( const sf::R
 {
     // this is necessary to avoid getting stuck when sliding from one wall-cell to another
     const auto speed_with_margin = movement_speed * 1.5f;
-    if ( intersection.width <= speed_with_margin.x && intersection.height <= speed_with_margin.y )
+    if ( intersection.width <= speed_with_margin.x && intersection.height <= speed_with_margin.y ) {
         return tried_location;
+    }
 
     sf::Vector2f correction {0, 0};
 
@@ -110,10 +69,12 @@ sf::RectangleShape collision::limit_with_edges ( const sf::RectangleShape& tried
     const auto min_y = rectangle.top;
     const auto max_y = rectangle.top + rectangle.height;
 
-    if ( min_x < 0 || max_x > map_size.x )
+    if ( min_x < 0 || max_x > map_size.x ) {
         final_location.setPosition ( { current_position.x, final_location.getPosition().y} );
-    if ( min_y < 0 || max_y > map_size.y )
+    }
+    if ( min_y < 0 || max_y > map_size.y ) {
         final_location.setPosition ( { final_location.getPosition().x, current_position.y} );
+    }
 
     return final_location;
 }
@@ -148,7 +109,12 @@ sf::Vector2f collision::limit_movement ( const sf::RectangleShape& tried_locatio
 {
     if ( tried_location.getPosition() == current_position ) return {0, 0};
 
-    const auto surrounding_cells = collision::surrounding_cells ( tried_location.getGlobalBounds(), map ) ;
+    const auto rectangle = tried_location.getGlobalBounds();
+    const sf::Vector2f midpoint {
+        rectangle.left + rectangle.width/2,
+                       rectangle.top + rectangle.height/2
+    };
+    const auto surrounding_cells = map.surrounding_cells ( midpoint ) ;
     auto final_location = collision::limit_with_collisions ( tried_location,
                           movement_speed,
                           surrounding_cells );

@@ -21,9 +21,6 @@ class cell_t;
 
 namespace collision {
 
-std::vector<const cell_t*> surrounding_cells ( const sf::FloatRect& object,
-        const map_t& map );
-
 std::experimental::optional<sf::FloatRect> detect_collision ( const sf::FloatRect& object,
         const cell_t& cell );
 

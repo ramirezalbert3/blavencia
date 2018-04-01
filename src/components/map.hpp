@@ -37,8 +37,26 @@ public:
     }
 
     void draw ( sf::RenderWindow& target );
+    bool is_cell_empty ( const sf::Vector2f& point ) const;
+    std::vector<const cell_t*> surrounding_cells ( const sf::Vector2f& point ) const;
 
 private:
+    auto find_cell ( const sf::Vector2f& point ) const
+    {
+        auto is_in_this_row = [&point, this] ( const std::vector<cell_t>& row ) {
+            return ( point.y >= row[0].getPosition().y &&
+                     point.y < row[0].getPosition().y + cell_height() );
+        };
+
+        auto is_in_this_col = [&point] ( const cell_t& col ) {
+            return ( point.x >= col.getPosition().x &&
+                     point.x < col.getPosition().x + col.size().x );
+        };
+
+        auto row = std::find_if ( begin(), end(), is_in_this_row );
+        auto col = std::find_if ( row->begin(), row->end(), is_in_this_col );
+        return std::tie ( row, col );
+    }
     estd::matrix<cell_t> cells;
     sf::Vector2f map_size_ = {};
 };

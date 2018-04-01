@@ -4,10 +4,10 @@
 #include "components/map.hpp"
 #include "engine/controls.hpp"
 
-constexpr float degs_to_rads = 3.1416/180;
+constexpr float degs_to_rads = 3.141592/180;
 projectile_t::projectile_t ( const sf::Vector2f& cell_size, const sf::Vector2f& initial_position, float angle ) :
     shape_ ( {cell_size.x * 0.2f, cell_size.y * 0.3f} ), speed_ ( cell_size / 6.f ),
-       direction_ ( {std::sin ( angle *degs_to_rads ), -std::cos ( angle *degs_to_rads ) } )
+       direction_ ( {std::sin ( angle * degs_to_rads ), -std::cos ( angle * degs_to_rads ) } )
 {
     const auto recangle = shape_.getGlobalBounds();
     const sf::Vector2f midpoint {
