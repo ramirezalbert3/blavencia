@@ -9,33 +9,6 @@
 
 #include "utils/csv.hpp"
 
-void update_projectiles ( std::vector<projectile_t> &projectiles, const map_t& map )
-{
-    std::for_each ( projectiles.begin(), projectiles.end(),
-    [] ( projectile_t& p ) {
-        p.move();
-    } );
-
-    auto it = std::begin ( projectiles );
-    while ( it != std::end ( projectiles ) ) {
-        const auto rectangle = it->getGlobalBounds();
-        auto cells = map.surrounding_cells ( rectangle );
-
-        const bool projectile_collided = std::any_of ( cells.begin(),
-                                         cells.end(),
-        [&rectangle] ( const cell_t* cell ) {
-            return collision::detect_collision ( rectangle, *cell );
-        } );
-
-        if ( projectile_collided ) {
-            *it = projectiles.back();
-            projectiles.pop_back();
-        } else {
-            ++it;
-        }
-    }
-}
-
 int main()
 {
     const auto texture_map = textures::load_texture_map ( {{"empty", "grass"}, {"wall", "bricks"}} );

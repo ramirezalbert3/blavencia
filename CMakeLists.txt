@@ -11,7 +11,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(SFML 2.1 REQUIRED network audio graphics window system)
 
-set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+# set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 find_program(
   CLANG_TIDY_EXE
   NAMES "clang-tidy"

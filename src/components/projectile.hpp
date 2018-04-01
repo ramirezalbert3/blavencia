@@ -24,5 +24,8 @@ private:
     sf::Vector2f direction_ {1, 0};
 };
 
-#endif // BLAVENCIA_COMPONENTS_PROJECTILE_HPP
+class map_t;
+void clean_projectiles ( std::vector<projectile_t> &projectiles, const map_t& map );
+void update_projectiles ( std::vector<projectile_t> &projectiles, const map_t& map );
 
+#endif // BLAVENCIA_COMPONENTS_PROJECTILE_HPP
