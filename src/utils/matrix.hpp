@@ -78,7 +78,7 @@ struct matrix {
     }
     auto rows() const
     {
-        return data.size();
+        return size();
     }
     auto columns() const
     {

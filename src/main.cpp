@@ -69,7 +69,7 @@ int main()
         } );
         std::for_each ( enemies.begin(), enemies.end(),
         [&world] ( enemy_t& e ) {
-            e.draw ( world );
+//              =e.draw ( world );
         } );
         world.display();
     }

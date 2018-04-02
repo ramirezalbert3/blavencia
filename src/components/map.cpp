@@ -4,8 +4,8 @@
 #include "components/map.hpp"
 #include <string>
 
-map_t::map_t ( estd::matrix<cell_t> map,
-               sf::Vector2f map_size,
+map_t::map_t ( const estd::matrix<cell_t>& map,
+               const sf::Vector2f& map_size,
                const textures::texture_map& textures )
     : cells ( map ), map_size_ ( map_size )
 {
@@ -22,6 +22,15 @@ map_t::map_t ( estd::matrix<cell_t> map,
         }
         y++;
     }
+}
+
+std::size_t map_t::rows() const
+{
+    return cells.rows();
+}
+std::size_t map_t::columns() const
+{
+    return cells.columns();
 }
 
 float map_t::width() const
@@ -87,7 +96,7 @@ std::vector<const cell_t*> map_t::surrounding_cells ( const sf::FloatRect& recta
         rectangle.left + rectangle.width/2,
                        rectangle.top + rectangle.height/2
     };
-    return surrounding_cells(midpoint);
+    return surrounding_cells ( midpoint );
 }
 
 bool map_t::is_cell_empty ( const sf::Vector2f& point ) const

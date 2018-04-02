@@ -6,7 +6,8 @@ add_library(blavencia_lib
                 components/enemy.cpp
                 engine/collision.cpp
                 engine/textures.cpp
-                engine/controls.cpp)
+                engine/controls.cpp
+                engine/graph.cpp)
 
 set_target_properties(blavencia_lib PROPERTIES
     CXX_CLANG_TIDY "${DO_CLANG_TIDY}")

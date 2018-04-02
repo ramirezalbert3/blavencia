@@ -6,16 +6,16 @@
 
 class map_t {
 public:
-    map_t ( estd::matrix<cell_t> map,
-            sf::Vector2f map_size,
+    map_t ( const estd::matrix<cell_t>& map,
+            const sf::Vector2f& map_size,
             const textures::texture_map& textures );
 
     map_t ( std::initializer_list<std::initializer_list<cell_t>> map,
-            sf::Vector2f map_size,
+            const sf::Vector2f &map_size,
             const textures::texture_map& textures ) : map_t ( estd::matrix<cell_t> {map}, map_size, textures ) {}
 
-    map_t ( estd::matrix<std::string> map,
-            sf::Vector2f map_size,
+    map_t ( const estd::matrix<std::string>& map,
+            const sf::Vector2f& map_size,
             const textures::texture_map& textures ) : map_t ( estd::matrix<cell_t> {map}, map_size, textures ) {}
 
     map_t ( const map_t& x ) = default;
@@ -23,6 +23,8 @@ public:
     map_t& operator= ( const map_t& x ) = default;
     map_t& operator= ( map_t&& ) = default;
 
+    std::size_t rows() const;
+    std::size_t columns() const;
     float width() const;
     float height() const;
     float cell_width() const;
