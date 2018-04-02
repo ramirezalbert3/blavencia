@@ -3,6 +3,7 @@
 #include "components/map.hpp"
 #include "components/character.hpp"
 #include "components/projectile.hpp"
+#include "components/enemy.hpp"
 
 #include "engine/collision.hpp"
 #include "engine/textures.hpp"
@@ -11,6 +12,7 @@
 
 int main()
 {
+    std::srand ( std::time ( nullptr ) );
     const auto texture_map = textures::load_texture_map ( {{"empty", "grass"}, {"wall", "bricks"}} );
     const std::string dat_path = DBG_DAT_PATH;
     const std::string map_path = dat_path + std::string ( "/maps/map1.csv" );
@@ -18,6 +20,7 @@ int main()
     const auto cell_size = sf::Vector2f {map.cell_width(), map.cell_height() };
 
     character_t player {cell_size};
+    std::vector<enemy_t> enemies {{cell_size}, {cell_size}, {cell_size}, {cell_size}, {cell_size}};
 
     std::vector<projectile_t> projectiles;
     projectiles.reserve ( 128 );
@@ -46,6 +49,11 @@ int main()
         move_projectiles ( projectiles );
         clean_projectiles ( projectiles, map );
 
+        std::for_each ( enemies.begin(), enemies.end(),
+        [&world, &map] ( enemy_t& e ) {
+            e.move ( map );
+        } );
+
 #ifdef __debug__
         auto surrounding_cells = map.surrounding_cells ( player.getGlobalBounds() ) ;
         for ( auto& cell : surrounding_cells )
@@ -58,6 +66,10 @@ int main()
         std::for_each ( projectiles.begin(), projectiles.end(),
         [&world] ( projectile_t& p ) {
             p.draw ( world );
+        } );
+        std::for_each ( enemies.begin(), enemies.end(),
+        [&world] ( enemy_t& e ) {
+            e.draw ( world );
         } );
         world.display();
     }

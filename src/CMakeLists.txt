@@ -3,6 +3,7 @@ add_library(blavencia_lib
                 components/map.cpp
                 components/character.cpp
                 components/projectile.cpp
+                components/enemy.cpp
                 engine/collision.cpp
                 engine/textures.cpp
                 engine/controls.cpp)
